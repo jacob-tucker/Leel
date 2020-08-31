@@ -1,4 +1,4 @@
-// NonFungibleToke.cdc
+// NonFungibleToken.cdc
 //
 // This is a complete version of the NonFungibleToken contract
 // that includes withdraw and deposit functionality, as well as a
@@ -18,7 +18,7 @@ pub contract NonFungibleToken {
         // The retailer that this NFT was minted from
         pub let retailer: String
         // The item that this NFT represents
-        pub let item: String
+        pub(set) var item: String
 
         // Initialize both fields in the init function
         init(initID: UInt64, initRetailer: String, initItem: String) {
@@ -114,6 +114,17 @@ pub contract NonFungibleToken {
         // Function that takes a NFT as an argument and 
         // adds it to the collections dictionary
         pub fun deposit(token: @NFT) {
+            // If an NFT already exists with the same name, the dictionary will replace it,
+            // which we don't want to happen. This will add a number to the end of it so we can
+            // count how many of the NFTs we have, and make sure they don't get replaced by other
+            // NFTs with the same name!
+            var replacer = 2
+            while self.ownedNFTs.keys.contains(token.item) {
+                log(token.item)
+                token.item = token.item.concat(replacer.toString())
+                replacer = replacer + 1
+            }
+
             // first remove the old token by indexing the dictionary, THEN put the new token there, and then destroy
             // the old token.
             let oldToken <- self.ownedNFTs[token.item] <- token

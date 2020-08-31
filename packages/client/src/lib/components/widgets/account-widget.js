@@ -26,7 +26,7 @@ export default class AccountWidget extends LitElement {
   }
 
   displayAccountOptions() {
-    let roles = ['Admin', 'Jacob', 'John', 'Toms Cafe', 'Jerrys Deli', 'NonProfit', 'Farida'];
+    let roles = ['Jacob', 'John', 'Chao', 'Toms Cafe', 'Jerrys Deli', 'NonProfit', 'Farida'];
     let optionsString = '';
     for (let i = 0; i < this.accountsLookUp.length; i++) {
       let label = `User ${i}`;

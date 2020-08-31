@@ -7,14 +7,65 @@ const fcl = require("@onflow/fcl");
 
 module.exports = class DappScripts {
 
-	static ballot_proposalList(imports) {
+	static read_nonprofit_tokens(imports) {
 		return fcl.script`
+				// read_nonprofit_tokens.cdc
+				
+				
+				// This script reads all the NFTs a non-profit holds to see the tokens that customers have donated there for their cause
 				
 				${DappScripts.injectImports(imports)}
-				pub fun main(): [String] {
-				    return DappState.proposalList();
+				pub fun main(nonprofitAddrParam: Address): [String] {
+				    let nonprofitAccount = getAccount(nonprofitAddrParam)
+				
+				    // Find the public Receiver capability for the user's collection
+				    let capability = nonprofitAccount.getCapability(/public/NFTReceiver)!
+				                        .borrow<&{NonFungibleToken.NFTReceiver}>()
+				                        ?? panic("Could not borrow nft collection reference from nonprofit")
+				
+				     // Print both collections as arrays of IDs
+				    log("Nonprofit 1 NFTs")
+				    log(capability.getItems())
+				
+				    return capability.getItems()
 				}
 				
+				
+		`;
+	}
+
+	static read_rewards(imports) {
+		return fcl.script`
+				// read_rewards.cdc
+				
+				
+				// This script prints the NFTs that account 0x01 has for sale.
+				${DappScripts.injectImports(imports)}
+				pub fun main(retailerAddrParam: Address): [String] {
+				    // 0x03 represents the retailer we would like to read the rewards from
+				    let retailer = getAccount(retailerAddrParam)
+				
+				    // Borrows a reference to the retailer's rewards list
+				    let retailerRewards = retailer.getCapability(/public/RewardsList)!
+				                                .borrow<&RewardsContract.Rewards>()
+				                                ?? panic("Could not borrow rewards resource")
+				
+				    // Logs the rewards out, each one is the name of the reward (aka the item you receive) and the
+				    // cost of that reward in Fungible Tokens
+				    log(retailerRewards.getRewards())
+				
+				    var rewardsList: [String] = []
+				    let rewardsListNames = retailerRewards.getRewards().keys
+				    let rewardsListCosts = retailerRewards.getRewards().values
+				
+				    var i = 0
+				    while i < rewardsListNames.length {
+				        rewardsList.append(rewardsListNames[i].concat(" : ".concat(rewardsListCosts[i].toString())))
+				        i = i + 1
+				    }
+				
+				    return rewardsList
+				}
 				
 		`;
 	}
@@ -25,8 +76,7 @@ module.exports = class DappScripts {
 				
 				
 				// This script checks that the customer has points after 
-				${DappScripts.injectImports(imports)}
-				// the retailer gives it to them after a purchase ("Earning Points" transaction)
+				// the retailer gives it to them after a purchase ("Earning Points" tx)
 				// Also checks to see if the user has an NFT in their collection if they've reached a certain
 				// thresh-hold
 				
@@ -36,7 +86,7 @@ module.exports = class DappScripts {
 				// "Earning Points"
 				
 				${DappScripts.injectImports(imports)}
-				pub fun main(accountAddrParam: Address) {
+				pub fun main(accountAddrParam: Address): [String] {
 				    // Get the accounts' public account objects
 				    let acct1 = getAccount(accountAddrParam)
 				
@@ -69,6 +119,8 @@ module.exports = class DappScripts {
 				    log(acct1Capability.myReferenceNFT.UCV)
 				    log("Account 1's CV values")
 				    log(acct1Capability.myReferenceNFT.CV)
+				
+				    return acct1Capability.getItems()
 				}
 				
 		`;

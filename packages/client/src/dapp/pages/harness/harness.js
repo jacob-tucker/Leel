@@ -32,17 +32,10 @@ export default class HarnessPage extends LitElement {
   getPages() {
     return [
       {
-        "name": "ballot",
-        "title": "Ballot Voting",
-        "description": "Create a simple voting system with a ballot.",
-        "category": "Voting",
-        "route": "/ballot"
-      },
-      {
         "name": "leel",
-        "title": "leel page",
-        "description": "Interact with leel.",
-        "category": "Leel",
+        "title": "Leel",
+        "description": "View how the smart contracts behind Leel interact with a UI.",
+        "category": " ",
         "route": "/leel"
       }
     ];
@@ -64,10 +57,9 @@ export default class HarnessPage extends LitElement {
       <div class="container m-auto">
         <div class="row fadeIn mt-3 p-2 block">
           <p class="mt-3">
-            Welcome to the UI Harness! Each feature module you selected for your project 
-            has a page that demonstrates all of the module's capabilities with a user interface. You can 
-            try the various features, then copy code selectively to your Dapp page. To continue, 
-            select a feature module.           
+            Click "View" under Leel to view how the smart contracts interact with
+            the UI, and how customers/retailers/nonprofits can interact with their 
+            transactions.          
           </p>
         </div>
         <ul class="mt-3 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">

@@ -2,7 +2,7 @@
 
 import NonFungibleToken from 0x02
 
-// This transaction sets up a new non-profit for the marketplace
+// This tx sets up a new non-profit for the marketplace
 // by creating an empty NFT Collection for the non-profit
 // so they can eventually receive NFTs from the customers who stake
 // their campaigns

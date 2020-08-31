@@ -4,7 +4,7 @@ import FungibleToken from 0x01
 import NonFungibleToken from 0x02
 import RewardsContract from 0x03
 
-// This transaction sets up the retailer for the marketplace by giving
+// This tx sets up the retailer for the marketplace by giving
 // them the ability to mint fungible and nonfungible tokens, so that they
 // can then transfer them to the customer. Note that both the 
 // fungible and nonfungible minting methods take in a recipient, 

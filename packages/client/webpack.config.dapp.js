@@ -70,6 +70,7 @@ module.exports = (env, argv) => {
         template: path.join(__dirname, "src/dapp/index.html")
       }),
       new FaviconsWebpackPlugin("src/dapp/assets/img/dappstarter.png"),
+      //new FaviconsWebpackPlugin("src/dapp/favicon.png"),
       // new MiniCssExtractPlugin()
     ],
     resolve: {

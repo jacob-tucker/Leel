@@ -10,24 +10,24 @@ import { LitElement, html, customElement, property } from "lit-element";
 
 @customElement('leel-page')
 export default class BallotPage extends LitElement {
-    @property()
-    title;
-    @property()
-    category;
-    @property()
-    description;
+  @property()
+  title;
+  @property()
+  category;
+  @property()
+  description;
 
-    createRenderRoot() {
-        return this;
-    }
+  createRenderRoot() {
+    return this;
+  }
 
-    constructor(args) {
-        super(args);
-    }
+  constructor(args) {
+    super(args);
+  }
 
-    render() {
+  render() {
 
-        let content = html`
+    let content = html`
       <page-body
         title="${this.title}"
         category="${this.category}"
@@ -72,7 +72,7 @@ export default class BallotPage extends LitElement {
       description="A customer will earn points when buying from the retailer."
       action="earningPoints"
       method="post"
-      fields="retailer customer"
+      fields="retailer customer amountToEarn"
     >
 
         <account-widget
@@ -86,6 +86,12 @@ export default class BallotPage extends LitElement {
           label="Customer"
           placeholder="Customer address"
         ></account-widget>
+
+        <text-widget
+          field="amountToEarn"
+          label="Amount To Earn"
+          placeholder="..."
+        ></text-widget>
 
     </action-card>
 
@@ -94,7 +100,7 @@ export default class BallotPage extends LitElement {
       description="A retailer can create a reward."
       action="createReward"
       method="post"
-      fields="retailer"
+      fields="retailer rewardItem minimumTokens allowedRetailers"
     >
 
       <account-widget
@@ -103,6 +109,24 @@ export default class BallotPage extends LitElement {
           placeholder="Retailer address"
         ></account-widget>
 
+      <text-widget
+        field="rewardItem"
+        label="Reward Item"
+        placeholder="..."
+      ></text-widget>
+
+      <text-widget
+          field="minimumTokens"
+          label="Minimum Required Tokens"
+          placeholder="..."
+      ></text-widget>
+
+      <text-widget
+        field="allowedRetailers"
+        label="Other Allowed Retailers"
+        placeholder="..."
+      ></text-widget>
+
     </action-card>
 
     <action-card
@@ -110,7 +134,7 @@ export default class BallotPage extends LitElement {
       description="Spend points at a retailer."
       action="spendPoints"
       method="post"
-      fields="customer retailer"
+      fields="customer retailer rewardItem booleanCheck foo otherRetailer amountFromOtherRetailer"
     >
 
         <account-widget
@@ -125,6 +149,27 @@ export default class BallotPage extends LitElement {
           placeholder="Retailer address"
         ></account-widget>
 
+        <text-widget
+        field="rewardItem"
+        label="What reward NFT will you purchase?"
+        placeholder="..."
+      ></text-widget>
+
+        <label>Use tokens from other retailer?  </label>
+        <input type="checkbox" data-field="foo">
+
+        <account-widget
+          field="otherRetailer"
+          label="Other Retailer (only if using other retailer, otherwise this field is N/A)"
+          placeholder="Other retailer address"
+        ></account-widget>
+
+        <text-widget
+          field="amountFromOtherRetailer"
+          label="Amount of tokens from other retailer"
+          placeholder="..."
+        ></text-widget>
+
     </action-card>
 
     <action-card
@@ -132,7 +177,7 @@ export default class BallotPage extends LitElement {
       description="A retailer can remove a reward."
       action="removeReward"
       method="post"
-      fields="retailer"
+      fields="retailer rewardItem"
     >
 
       <account-widget
@@ -141,6 +186,12 @@ export default class BallotPage extends LitElement {
           placeholder="Retailer address"
         ></account-widget>
 
+      <text-widget
+        field="rewardItem"
+        label="Reward Item"
+        placeholder="..."
+      ></text-widget>
+
     </action-card>
 
     <action-card
@@ -148,7 +199,7 @@ export default class BallotPage extends LitElement {
       description="Trade an NFT for FTs from another customer."
       action="trade"
       method="post"
-      fields="customer1 customer2"
+      fields="customer1 nftToGive customer2 ftToGive fromWhatRetailer"
     >
 
         <account-widget
@@ -157,12 +208,29 @@ export default class BallotPage extends LitElement {
           placeholder="Customer address to give NFT"
         ></account-widget>
 
+        <text-widget
+          field="nftToGive"
+          label="NFT To Give"
+          placeholder="..."
+        ></text-widget>
+
         <account-widget
           field="customer2"
           label="Customer2"
           placeholder="Customer address to receive NFT"
         ></account-widget>
 
+        <text-widget
+          field="ftToGive"
+          label="Amount of FT to Give"
+          placeholder="..."
+        ></text-widget>
+
+        <text-widget
+          field="fromWhatRetailer"
+          label="From What Retailer"
+          placeholder="..."
+        ></text-widget>
     </action-card>
 
     <action-card
@@ -208,7 +276,7 @@ export default class BallotPage extends LitElement {
       description="A customer can stake a non-profit."
       action="stakeNonProfit"
       method="post"
-      fields="nonprofit customer"
+      fields="nonprofit customer nftToGive"
     >
 
         <account-widget
@@ -222,6 +290,12 @@ export default class BallotPage extends LitElement {
           label="Customer"
           placeholder="Customer address"
         ></account-widget>
+
+        <text-widget
+          field="nftToGive"
+          label="What NFT will you give?"
+          placeholder="..."
+        ></text-widget>
 
     </action-card>
 
@@ -241,12 +315,44 @@ export default class BallotPage extends LitElement {
 
     </action-card>
 
+    <action-card
+      title="Read Rewards"
+      description="Reads the rewards at a retailer"
+      action="readRewards"
+      method="get"
+      fields="retailer"
+    >
+
+      <account-widget
+          field="retailer"
+          label="Retailer"
+          placeholder="Retailer address"
+        ></account-widget>
+
+    </action-card>
+
+    <action-card
+      title="Read NonProfit NFTs"
+      description="Reads the NFTs that a NonProfit holds from hosting a campaign."
+      action="readNonProfitTokens"
+      method="get"
+      fields="nonprofit"
+    >
+
+      <account-widget
+          field="nonprofit"
+          label="Nonprofit"
+          placeholder="Nonprofit address"
+        ></account-widget>
+
+    </action-card>
+
 
       </page-body>
       <page-panel id="resultPanel"></page-panel>
     `;
 
-        return content;
-    }
+    return content;
+  }
 }
 

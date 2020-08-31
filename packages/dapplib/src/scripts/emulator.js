@@ -17,6 +17,7 @@ const fkill = require('fkill');
 // Some control variables
 let config = networks.development.config;
 let accountCount = 6;
+let names = ["Jacob", "John", "Chao", "Toms Cafe", "Jerrys Deli", "NonProfit"]
 let keyCount = 3;
 
 // Unpopulated dappConfig with service info only
@@ -32,13 +33,14 @@ let dappConfig = {
 
   try {
     await fkill('flow');
-  } catch(e) {
+  } catch (e) {
   }
   // Start the emulator
   const emulator = spawn("npx", [
     "flow",
     "emulator",
     "start",
+    "-v",
     "--init=true",
     "--block-time=1s",
     "--persist=false",
@@ -82,6 +84,7 @@ let dappConfig = {
 
         // Create the account with the public keys
         let account = await Blockchain.createAccount(config, keyInfo);
+        account["name"] = names[a]
         dappConfig.wallets.push(account);
         dappConfig.accounts.push(account.address);
         console.log(`🤖 Account created on blockchain: ${account.address}`);
@@ -99,12 +102,12 @@ let dappConfig = {
 
           fs.readdir(contractsDir, function (err, files) {
             if (err) {
-                return console.log('Unable to find contracts directory: ' + err);
-            } 
-            
+              return console.log('Unable to find contracts directory: ' + err);
+            }
+
             let deploying = false;
             let fileIndex = 0;
-            let handle = setInterval(async() => {
+            let handle = setInterval(async () => {
               if (!deploying) {
                 deploying = true;
                 if (fileIndex > files.length - 1) {
@@ -114,19 +117,19 @@ let dappConfig = {
                   return;
                 }
                 let file = files[fileIndex];
-                if (file.toLowerCase().endsWith('.cdc')) {                  
+                if (file.toLowerCase().endsWith('.cdc')) {
                   let accountIndex = 0;
                   if (file.indexOf('_') > -1) {
                     let fileFrags = file.split('_');
-                    for(let f=0;f<fileFrags.length;f++) {
+                    for (let f = 0; f < fileFrags.length; f++) {
                       if (!isNaN(fileFrags[f])) {
                         let targetAccountIndex = Number(fileFrags[f]);
                         if (targetAccountIndex < dappConfig.accounts.length) {
                           accountIndex = targetAccountIndex;
                         }
-                        break;  
+                        break;
                       }
-                    }                    
+                    }
                   }
                   let contract = fs.readFileSync(contractsDir + file, 'utf8');
                   let contractAddresses = await Blockchain.deployContract(config, dappConfig.accounts[accountIndex], contract);

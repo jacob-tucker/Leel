@@ -4,7 +4,7 @@ import FungibleToken from 0x01
 import NonFungibleToken from 0x02
 
 // This script checks that the customer has points after 
-// the retailer gives it to them after a purchase ("Earning Points" transaction)
+// the retailer gives it to them after a purchase ("Earning Points" tx)
 // Also checks to see if the user has an NFT in their collection if they've reached a certain
 // thresh-hold
 
@@ -13,7 +13,7 @@ import NonFungibleToken from 0x02
 // "Setup for Retailer"
 // "Earning Points"
 
-pub fun main(accountAddrParam: Address) {
+pub fun main(accountAddrParam: Address): [String] {
     // Get the accounts' public account objects
     let acct1 = getAccount(accountAddrParam)
 
@@ -46,4 +46,6 @@ pub fun main(accountAddrParam: Address) {
     log(acct1Capability.myReferenceNFT.UCV)
     log("Account 1's CV values")
     log(acct1Capability.myReferenceNFT.CV)
+
+    return acct1Capability.getItems()
 }

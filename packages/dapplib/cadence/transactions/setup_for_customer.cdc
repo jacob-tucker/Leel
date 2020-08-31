@@ -1,7 +1,7 @@
 import FungibleToken from 0x01
 import NonFungibleToken from 0x02
 
-// This transaction sets up a new user for the marketplace
+// This tx sets up a new user for the marketplace
 // by publishing a Vault reference, so that retailers can deposit
 // points into the user's account. It also creates an empty NFT Collection for the
 // user so they can eventually receive NFTs from the retailer after certain thresh-holds.

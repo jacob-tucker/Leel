@@ -2,14 +2,14 @@
 
 import RewardsContract from 0x03
 
-// This transaction is meant for retailer's to create a new reward for customers
+// This tx is meant for retailer's to create a new reward for customers
 
 // NOTE: Setup for Retailer must be signed before this tra
 
 // SIGNED BY: RETAILER
 
 
-transaction {
+transaction(rewardItemParam: String, minimumTokensParam: Int, allowedRetailersParam: [String]) {
 
 
     prepare(acct: AuthAccount) {
@@ -19,7 +19,7 @@ transaction {
                                 ?? panic("Could not borrow rewards resource")
 
         // If the item does not exist, panic
-        if RetailerRewards.itemExists(name: "Water Bottle") == true {
+        if RetailerRewards.itemExists(name: rewardItemParam) == true {
             panic("Item already exists!")
         }
 
@@ -29,9 +29,9 @@ transaction {
         // THE NEXT FIELDS ONLY APPLY IF THE USER USES ANOTHER RETAILER'S TOKENS TO PURCHASE THE REWARD
         // ucvNumber, which is the minimum UCV the customer must have to use tokens from another retailer
         // otherRetailers, which is a list of retailers the user is allowed to spend their tokens from to help out with thr purchase
-        // minTokensPercent, which is a percent of the amount of tokens the user must spend from THIS retailer in the transaction
+        // minTokensPercent, which is a percent of the amount of tokens the user must spend from THIS retailer in the tx
         // multiplier, which multiplies the base cost of the NFT by a number to get a new cost if incorporating another r
-        RetailerRewards.createReward(name: "Water Bottle", points: UFix64(30), ucvNumber: UFix64(5), cvNumber: UFix64(0), otherRetailers: ["Burger King"], minTokensPercent: UFix64(0.5), multiplier: UFix64(1.25))
+        RetailerRewards.createReward(name: rewardItemParam, points: UFix64(minimumTokensParam), ucvNumber: UFix64(5), cvNumber: UFix64(0), otherRetailers: allowedRetailersParam, minTokensPercent: UFix64(0.5), multiplier: UFix64(1.25))
 
         log("Created reward")
     }
