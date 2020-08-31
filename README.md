@@ -36,31 +36,6 @@ Using a terminal (or command prompt), change to the folder containing the projec
 
 To view your dapp, open your browser to http://localhost:5000
 
-We ♥️ developers and want you to have an awesome experience. You should be experiencing Dappiness at this point. If not, let us know and we will help. Visit [https://support.trycrypto.com](https://support.trycrypto.com) or hit us up on Twitter @TryCrypto.
-
-
-## Smart Contract
-
-`lerna run deploy --scope=@trycrypto/dappstarter-dapplib --stream` to compile contracts/*.sol files, deploy them to the blockchain. 
-
-## Dapp
-
-Run the dapp in a separate terminal. You *must* have run `npm run deploy` for the dapp to see most recent smart contract changes.
-
-`lerna run dev --scope=@trycrypto/dappstarter-client --stream` runs the dapp on http://localhost:5001 using webpack dev server
-
-## Server
-
-Run the server in a separate terminal. You *must* have run `npm run deploy` for the dapp to see most recent smart contract changes.
-
-`lerna run dev --scope=@trycrypto/dappstarter-server --stream` runs NodeJS server app on port 5002 with NestJS
-
-## Production Builds
-
-DappStarter currently does not provide blockchain migration scripts to be used in production. However, here are the scripts for generating production builds:
-
-`lerna run build:prod` generates dapp bundle for production.
-
 ## [Playground](https://play.onflow.org/0d507a56-cf87-4232-a5dd-bcc585b64551)
 
 ### Notes
@@ -73,36 +48,36 @@ NFTs exist to represent assets that are unique and indivisible. The NFT contract
 
 The Rewards contract provides a definition for the list of reward items of each retailer. It enables a retailer to create or destroy a new reward item, and to declare its cost.
 
-**1. customer set up**
+**1. Customer Set Up**
 
 Run transaction 1, signed by the customer account. This transaction sets up a new user for the marketplace by publishing a Vault reference, so that retailers can deposit points into the user's account. It also creates an empty NFT Collection for the
 user so they can eventually receive NFTs from the retailer after certain thresh-holds. 
 
-**2. retailer set up**
+**2. Retailer Set Up**
 
 Run transaction 2, signed by the retailer account. This transaction sets up the retailer for the marketplace by giving them the ability to mint fungible and nonfungible tokens, so that they can then transfer them to the customer. Note that both the fungible and nonfungible minting methods take in a recipient, so these are just definitions for the retailer to be able to deposit
 tokens into a customer's account.
 
-**3. earning points**
+**3. Earning Points**
 
 Run transaction 3, signed by the retailer. This transaction deposits fungible tokens (points) into the customer's account. It also updates the user's unique-customer-value for making a purchase at the store.
 
-**4. creating a reward item**
+**4. Creating a Reward Item**
 
 Run transaction 4, signed by the retailer. This transaction creates a reward item (in this case, a water bottle) along with its price.
 
-**5. redeem points**
+**5. Redeem Points**
 
 Run transaction 5, signed by the customer. This transaction allows the customer  to spend tokens on an item registered on the retailer's rewards list. If the customer has enough FTs in his account, then it will be deducted accordingly. In a successful transaction, the reward item will be deposited to the customer's NFT receiver.
 
-**6. removing a reward item**
+**6. Removing a Reward Item**
 
 This transaction allows a retailer to remove a reward item from his/her list.
 
-**7. trade NFTs**
+**7. Trade NFTs**
 
 This transaction trades an NFT for a certain amount of fungible tokens. One user receives an NFT and one user receives a certain amount of fungible tokens. It is to be signed by the person owning and selling the NFT.
 
-**8. instagram Ad**
+**8. Instagram Ad**
 
 This transaction, signed by retailer, is triggered when a user posts on instagram promoting the retailer. They will earn points and receive an updated UCV value for their good deeds (less than what they would get for purchasing at the retailer, though).
