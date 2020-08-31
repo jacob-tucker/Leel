@@ -33,6 +33,8 @@ NFTs exist to represent assets that are unique and indivisible. The NFT contract
 
 The Rewards contract provides a definition for the list of reward items of each retailer. It enables a retailer to create or destroy a new reward item, and to declare its cost.
 
+### Transaction Explanations
+
 **1. Customer Set Up**
 
 Run transaction 1, signed by the customer account. This transaction sets up a new user for the marketplace by publishing a Vault reference, so that retailers can deposit points into the user's account. It also creates an empty NFT Collection for the
