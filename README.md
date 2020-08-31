@@ -13,10 +13,6 @@ To create an equitable system where consumers can capitalize on their unique cus
 Consumers have limited opportunity to leverage their unique customer value.
 They are passive participants, not owners of their data. 
 
-## My Dapp
-
-This project is for the blockchain application My Dapp. It contains code for the Smart Contract, web-based dapp and NodeJS server.
-
 # Pre-requisites
 
 In order to develop and build "My Dapp," the following pre-requisites must be installed:
