@@ -60,15 +60,28 @@ Run transaction 3, signed by the retailer. This transaction deposits fungible to
 
 **4. Creating a Reward Item**
 
-Run transaction 4, signed by the retailer. This transaction creates a reward item (in this case, a water bottle) along with its price.
+Run transaction 4, signed by the retailer. This transaction creates a reward item along with its price. 
 
-**5. Redeem Points**
+There are multiple other paramaters that go into creating a reward. Because users can use tokens from other retailers
+to purchase an NFT at one retailer, the retailer must specify which retailers the users can use their points from,
+the minimum amount of tokens required from this retailer, and the extra cost of using tokens from another retailer.
+        
+- ucvNumber, which is the minimum UCV the customer must have to use tokens from another retailer
+- otherRetailers, which is a list of retailers the user is allowed to spend their tokens from to help out with thr purchase
+- minTokensPercent, which is a percent of the amount of tokens the user must spend from THIS retailer in the transaction
+- multiplier, which multiplies the base cost of the NFT by a number to get a new cost if incorporating another r
 
-Run transaction 5, signed by the customer. This transaction allows the customer  to spend tokens on an item registered on the retailer's rewards list. If the customer has enough FTs in his account, then it will be deducted accordingly. In a successful transaction, the reward item will be deposited to the customer's NFT receiver.
+**5. Spend Points**
+
+Run transaction 5, signed by the customer. This transaction allows the customer to spend tokens on an item registered on the retailer's rewards list. If the customer has enough FTs in their account, then it will be deducted accordingly. In a successful transaction, the reward item will be deposited to the customer's NFT receiver.
+
+Note that customers can use a combination of tokens from two retailers. If the user specifies they only want to spend tokens from the specific retailer,
+they will not have to use as many tokens and will get a better price. If the user chooses to use a combination of tokens from multiple retailers, the price
+will be adjusted, however they can use those other loyalty points from other places and allow them to benefit them here.
 
 **6. Removing a Reward Item**
 
-This transaction allows a retailer to remove a reward item from his/her list.
+This transaction allows a retailer to remove a reward item from their list.
 
 **7. Trade NFTs**
 
@@ -77,3 +90,11 @@ This transaction trades an NFT for a certain amount of fungible tokens. One user
 **8. Instagram Ad**
 
 This transaction, signed by retailer, is triggered when a user posts on instagram promoting the retailer. They will earn points and receive an updated UCV value for their good deeds (less than what they would get for purchasing at the retailer, though).
+
+**9. Setup for NonProfit**
+
+This transaction allows NonProfits to set up an account. This brings in the community good component, as customers will be able to give them NFTs for their campaigns.
+
+**10. Stake a NonProfit**
+
+This transaction allows customers to donate their NFTs to NonProfits to stake their campaigns and help with their projects/desires. The NFT will be removed from the customer's account and placed into the NonProfit's NFT Collection.
