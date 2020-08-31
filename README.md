@@ -13,24 +13,11 @@ To create an equitable system where consumers can capitalize on their unique cus
 Consumers have limited opportunity to leverage their unique customer value.
 They are passive participants, not owners of their data. 
 
-## Pre-requisites
+## Contracts, Transactions & Scripts
 
-In order to develop and build "My Dapp," the following pre-requisites must be installed:
-
-* [Visual Studio Code](https://code.visualstudio.com/download) (or any IDE for editing Javascript)
-* [NodeJS](https://nodejs.org/en/download/)
-* [Yarn](https://classic.yarnpkg.com/en/docs/install) (DappStarter uses [Yarn Workspaces](https://classic.yarnpkg.com/en/docs/workspaces))
-* [Flow CLI](https://docs.onflow.org/docs/cli) (https://docs.onflow.org/docs/cli) (after installation run `flow cadence install-vscode-extension` to enable code highlighting for Cadence source files)
-
-## Installation
-
-Using a terminal (or command prompt), change to the folder containing the project files and type: `yarn` This will fetch all required dependencies. The process will take 1-3 minutes and while it is in progress you can move on to the next step.
-
-## Build, Deploy and Test
-
-Using a terminal (or command prompt), change to the folder containing the project files and type: `yarn start` This will run all the dev scripts in each project package.json.
-
-To view your dapp, open your browser to http://localhost:5000
+The contracts can be found in packages/dapplib/contracts
+The transactions can be found in packages/dapplib/cadence/transactions
+The scripts can be found in packages/dapplib/cadence/scripts
 
 ## The playground can be found here: [Playground](https://play.onflow.org/0d507a56-cf87-4232-a5dd-bcc585b64551)
 
@@ -98,3 +85,24 @@ This transaction allows NonProfits to set up an account. This brings in the comm
 **10. Stake a NonProfit**
 
 This transaction allows customers to donate their NFTs to NonProfits to stake their campaigns and help with their projects/desires. The NFT will be removed from the customer's account and placed into the NonProfit's NFT Collection.
+
+## Pre-requisites
+
+We used DappStarter to help us get started, and it allowed us to have a nice UI to perform our smart contracts upon certain actions. The creators of DappStarter (the TryCrypto team) can be found here: https://www.trycrypto.com/
+
+In order to develop and build "My Dapp," the following pre-requisites must be installed:
+
+* [Visual Studio Code](https://code.visualstudio.com/download) (or any IDE for editing Javascript)
+* [NodeJS](https://nodejs.org/en/download/)
+* [Yarn](https://classic.yarnpkg.com/en/docs/install) (DappStarter uses [Yarn Workspaces](https://classic.yarnpkg.com/en/docs/workspaces))
+* [Flow CLI](https://docs.onflow.org/docs/cli) (https://docs.onflow.org/docs/cli) (after installation run `flow cadence install-vscode-extension` to enable code highlighting for Cadence source files)
+
+## Installation
+
+Using a terminal (or command prompt), change to the folder containing the project files and type: `yarn` This will fetch all required dependencies. The process will take 1-3 minutes and while it is in progress you can move on to the next step.
+
+## Build, Deploy and Test
+
+Using a terminal (or command prompt), change to the folder containing the project files and type: `yarn start` This will run all the dev scripts in each project package.json.
+
+To view your dapp, open your browser to http://localhost:5000
