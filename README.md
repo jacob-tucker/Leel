@@ -21,7 +21,7 @@ The transactions can be found in packages/dapplib/cadence/transactions
 
 The scripts can be found in packages/dapplib/cadence/scripts
 
-## The playground can be found [here]:(https://play.onflow.org/0d507a56-cf87-4232-a5dd-bcc585b64551)
+## The playground can be found [here](https://play.onflow.org/0d507a56-cf87-4232-a5dd-bcc585b64551)
 
 ### Notes
 
