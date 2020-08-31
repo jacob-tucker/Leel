@@ -1,7 +1,7 @@
 import { LitElement, html, customElement, property } from "lit-element";
 import DappLib from "@trycrypto/dappstarter-dapplib";
 
-@customElement("account-widget")
+@customElement("account-widget-nonprofit")
 export default class AccountWidget extends LitElement {
   @property()
   field;
@@ -26,14 +26,14 @@ export default class AccountWidget extends LitElement {
   }
 
   displayAccountOptions() {
-    let roles = ['Jacob', 'John', 'Chao', 'Kira'];
+    let roles = ["NonProfit"];
     let optionsString = '';
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 1; i++) {
       let label = `User ${i}`;
       if (roles.length > i) {
         label = roles[i];
       }
-      optionsString = optionsString + `<option value="${this.accountsLookUp[i]}">${label} - ${this.accountsLookUp[i]}</option>`;
+      optionsString = optionsString + `<option value="${this.accountsLookUp[i + 12]}">${label} - ${this.accountsLookUp[i + 12]}</option>`;
     };
 
     return optionsString;

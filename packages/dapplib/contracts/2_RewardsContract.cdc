@@ -5,57 +5,57 @@
 pub contract RewardsContract {
 
     pub resource Reward {
-        // The other retailers whose points can be used for this NFT
+        // The other retailers whose tokens can be used for this NFT
         pub let allowedRetailers: [String]
 
         // The minimum UCV value the customer must have to be able to use
-        // points from other retailers
+        // tokens from other retailers
         pub let minimumUCVForOthers: UFix64
 
         // The minimum CV value the customer must have to be able to use
-        // points from other retailers
+        // tokens from other retailers
         pub let minimumCVForOthers: UFix64
 
-        // The amount of points the customer needs for this NFT
-        pub let points: UFix64
+        // The amount of tokens the customer needs for this NFT
+        pub let tokens: UFix64
 
-        // The amount of points needed if the customer uses tokens in the transaction from other retailers.
-        // Calculates by self.points * the multiplier (for example 1.25)
-        pub let points2nd: UFix64
+        // The amount of tokens needed if the customer uses tokens in the transaction from other retailers.
+        // Calculates by self.tokens * the multiplier (for example 1.25)
+        pub let tokens2nd: UFix64
 
         // This specifies the minimum amount of tokens from THIS retailer that they must spend
         // if also trying to spend tokens from other retailers to help out with the cost.
         pub let minTokensFromHere: UFix64
 
-        init(theAllowedRetailers: [String], theMinimumUCVForOthers: UFix64, theMinimumCVForOthers: UFix64, thePoints: UFix64, theMinTokensPercent: UFix64, theMultiplier: UFix64) {
+        init(theAllowedRetailers: [String], theMinimumUCVForOthers: UFix64, theMinimumCVForOthers: UFix64, theTokens: UFix64, theMinTokensPercent: UFix64, theMultiplier: UFix64) {
             self.allowedRetailers = theAllowedRetailers
             self.minimumUCVForOthers = theMinimumUCVForOthers
             self.minimumCVForOthers = theMinimumCVForOthers
-            self.points = thePoints
-            self.points2nd = thePoints * theMultiplier
-            self.minTokensFromHere = (thePoints * theMultiplier) * theMinTokensPercent
+            self.tokens = theTokens
+            self.tokens2nd = theTokens * theMultiplier
+            self.minTokensFromHere = (theTokens * theMultiplier) * theMinTokensPercent
         }
     }
 
     // A resource that can be given to each retailer so they can make
-    // a list of rewards for a certain amount of points
+    // a list of rewards for a certain amount of tokens
     pub resource Rewards {
         // A dictionary that maps the name of the rewards to the amount of
-        // points it costs.
+        // tokens it costs.
         pub let rewards: @{String: Reward}
 
         // For display purposes, so the user can see the reward matched to the amount of
         // tokens it requires
         pub let displayRewards: {String: UFix64}
         
-        // Creates a new reward and also specifies if this reward allows points to be spent that were earned
+        // Creates a new reward and also specifies if this reward allows tokens to be spent that were earned
         // from other retailers (and if so, what those retailers are).
-        pub fun createReward(name: String, points: UFix64, ucvNumber: UFix64, cvNumber: UFix64, otherRetailers: [String], minTokensPercent: UFix64, multiplier: UFix64) {
-            let theReward <- create Reward(theAllowedRetailers: otherRetailers, theMinimumUCVForOthers: ucvNumber, theMinimumCVForOthers: cvNumber, thePoints: points, theMinTokensPercent: minTokensPercent, theMultiplier: multiplier)
+        pub fun createReward(name: String, tokens: UFix64, ucvNumber: UFix64, cvNumber: UFix64, otherRetailers: [String], minTokensPercent: UFix64, multiplier: UFix64) {
+            let theReward <- create Reward(theAllowedRetailers: otherRetailers, theMinimumUCVForOthers: ucvNumber, theMinimumCVForOthers: cvNumber, theTokens: tokens, theMinTokensPercent: minTokensPercent, theMultiplier: multiplier)
             let oldReward <- self.rewards[name] <- theReward
             destroy oldReward
 
-            self.displayRewards[name] = points
+            self.displayRewards[name] = tokens
         }
 
 

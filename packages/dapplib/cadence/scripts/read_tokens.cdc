@@ -3,15 +3,15 @@
 import FungibleToken from 0x01
 import NonFungibleToken from 0x02
 
-// This script checks that the customer has points after 
-// the retailer gives it to them after a purchase ("Earning Points" tx)
+// This script checks that the customer has tokens after 
+// the retailer gives it to them after a purchase ("Earning Tokens" tx)
 // Also checks to see if the user has an NFT in their collection if they've reached a certain
 // thresh-hold
 
 // STEPS TO GET THIS TO WORK:
 // "Setup for Customer"
 // "Setup for Retailer"
-// "Earning Points"
+// "Earning Tokens"
 
 pub fun main(accountAddrParam: Address): [String] {
     // Get the accounts' public account objects

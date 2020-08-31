@@ -3,7 +3,7 @@ import NonFungibleToken from 0x02
 
 // This tx sets up a new user for the marketplace
 // by publishing a Vault reference, so that retailers can deposit
-// points into the user's account. It also creates an empty NFT Collection for the
+// tokens into the user's account. It also creates an empty NFT Collection for the
 // user so they can eventually receive NFTs from the retailer after certain thresh-holds.
 
 // SIGNED BY: CUSTOMER
@@ -16,7 +16,7 @@ transaction {
     acct.save<@FungibleToken.Vault>(<-vaultA, to: /storage/MainVault)
   
     // Create a public Receiver capability to the Vault so retailers can
-    // give them points for loyalty
+    // give them tokens for loyalty
     acct.link<&FungibleToken.Vault{FungibleToken.Receiver, FungibleToken.Balance, FungibleToken.Provider}>
              (/public/MainReceiver, target: /storage/MainVault)
 

@@ -29,7 +29,7 @@ transaction(retailerNameParam: String) {
     // getAccount returns)
     acct.link<&FungibleToken.VaultMinter>(/private/PrivFTMinter, target: /storage/FTMinter)
 
-    log("Created a points minter for the retailer")
+    log("Created a tokens minter for the retailer")
 
     // store  anonfungible token minter resource in account storage
     acct.save(<-NonFungibleToken.createNFTMinter(name: retailerNameParam), to: /storage/NFTMinter)

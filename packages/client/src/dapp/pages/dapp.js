@@ -8,6 +8,7 @@ import "../../lib/components/widgets/account-widget.js";
 import "../../lib/components/widgets/upload-widget.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html";
 import { LitElement, html, customElement, property } from "lit-element";
+import Logo from './leel_logo_together_new.png'
 
 @customElement("dapp-page")
 export default class DappPage extends LitElement {
@@ -34,8 +35,9 @@ export default class DappPage extends LitElement {
     let content = html`
       <div class="container m-auto">
         <div class="row fadeIn mt-3 p-2 block">
-          <h2 class="text-6xl">🎉 Leel</h2>
+          <h2 class="text-6xl">Leel</h2>
           <p class="mt-3">
+            <img src={Logo} alt="Logo" />
             This is a preview of how Leel would function in a real-world scenario.
           </p>
           <p class="mt-3">

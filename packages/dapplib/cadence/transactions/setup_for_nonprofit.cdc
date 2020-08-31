@@ -1,6 +1,6 @@
 // setup_for_nonprofit.cdc
 
-import NonFungibleToken from 0x02
+import FungibleToken from 0x01
 
 // This tx sets up a new non-profit for the marketplace
 // by creating an empty NFT Collection for the non-profit
@@ -10,12 +10,17 @@ import NonFungibleToken from 0x02
 // SIGNED BY: NON-PROFIT
 transaction {
   prepare(acct: AuthAccount) {
-    // store an empty NFT Collection in account storage so the non-profit can later receive NFTs
-    acct.save<@NonFungibleToken.Collection>(<-NonFungibleToken.createEmptyCollection(), to: /storage/NFTCollection)
+     // create a new vault instance for the customer with an initial balance of 0
+    let vaultA <- FungibleToken.createEmptyVault()
 
-    // publish a capability to the Collection in storage so it can be deposited into
-    acct.link<&{NonFungibleToken.NFTReceiver}>(/public/NFTReceiver, target: /storage/NFTCollection)
+    // Store the vault in the account storage
+    acct.save<@FungibleToken.Vault>(<-vaultA, to: /storage/MainVault)
+  
+    // Create a public Receiver capability to the Vault so retailers can
+    // give them tokens for loyalty
+    acct.link<&FungibleToken.Vault{FungibleToken.Receiver, FungibleToken.Balance, FungibleToken.Provider}>
+             (/public/MainReceiver, target: /storage/MainVault)
 
-    log("Created a new NFT empty collection and published a reference")
+    log("Created Vault reference on the nonprofit's account")
   }
 }

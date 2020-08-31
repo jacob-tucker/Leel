@@ -2,6 +2,8 @@ import "../components/page-panel.js";
 import "../components/page-body.js";
 import "../../../lib/components/shared/action-card.js";
 import "../../../lib/components/widgets/account-widget.js";
+import "../../../lib/components/widgets/account-widget-retailer.js";
+import "../../../lib/components/widgets/account-widget-nonprofit.js";
 import "../../../lib/components/widgets/text-widget.js";
 import "../../../lib/components/widgets/number-widget.js";
 import "../../../lib/components/widgets/upload-widget.js";
@@ -59,27 +61,27 @@ export default class BallotPage extends LitElement {
       fields="retailer"
     >
 
-      <account-widget
+      <account-widget-retailer
           field="retailer"
           label="Retailer"
           placeholder="Retailer address"
-        ></account-widget>
+        ></account-widget-retailer>
 
     </action-card>
 
     <action-card
-      title="Earning Points"
-      description="A customer will earn points when buying from the retailer."
-      action="earningPoints"
+      title="Earning Tokens"
+      description="A customer will earn tokens when buying from the retailer."
+      action="earningTokens"
       method="post"
       fields="retailer customer amountToEarn"
     >
 
-        <account-widget
+        <account-widget-retailer
           field="retailer"
           label="Retailer"
           placeholder="Retailer address"
-        ></account-widget>
+        ></account-widget-retailer>
 
         <account-widget
           field="customer"
@@ -103,11 +105,11 @@ export default class BallotPage extends LitElement {
       fields="retailer rewardItem minimumTokens allowedRetailers"
     >
 
-      <account-widget
+      <account-widget-retailer
           field="retailer"
           label="Retailer"
           placeholder="Retailer address"
-        ></account-widget>
+        ></account-widget-retailer>
 
       <text-widget
         field="rewardItem"
@@ -130,9 +132,9 @@ export default class BallotPage extends LitElement {
     </action-card>
 
     <action-card
-      title="Spend Points"
-      description="Spend points at a retailer."
-      action="spendPoints"
+      title="Spend Tokens"
+      description="Spend tokens at a retailer."
+      action="spendTokens"
       method="post"
       fields="customer retailer rewardItem booleanCheck foo otherRetailer amountFromOtherRetailer"
     >
@@ -143,11 +145,11 @@ export default class BallotPage extends LitElement {
           placeholder="Customer address"
         ></account-widget>
 
-        <account-widget
+        <account-widget-retailer
           field="retailer"
           label="Retailer"
           placeholder="Retailer address"
-        ></account-widget>
+        ></account-widget-retailer>
 
         <text-widget
         field="rewardItem"
@@ -158,11 +160,11 @@ export default class BallotPage extends LitElement {
         <label>Use tokens from other retailer?  </label>
         <input type="checkbox" data-field="foo">
 
-        <account-widget
+        <account-widget-retailer
           field="otherRetailer"
           label="Other Retailer (only if using other retailer, otherwise this field is N/A)"
           placeholder="Other retailer address"
-        ></account-widget>
+        ></account-widget-retailer>
 
         <text-widget
           field="amountFromOtherRetailer"
@@ -180,11 +182,11 @@ export default class BallotPage extends LitElement {
       fields="retailer rewardItem"
     >
 
-      <account-widget
+      <account-widget-retailer
           field="retailer"
           label="Retailer"
           placeholder="Retailer address"
-        ></account-widget>
+        ></account-widget-retailer>
 
       <text-widget
         field="rewardItem"
@@ -226,26 +228,26 @@ export default class BallotPage extends LitElement {
           placeholder="..."
         ></text-widget>
 
-        <text-widget
+        <account-widget-retailer
           field="fromWhatRetailer"
           label="From What Retailer"
           placeholder="..."
-        ></text-widget>
+        ></account-widget-retailer>
     </action-card>
 
     <action-card
       title="Instagram Ad"
-      description="A customer will earn points when doing an instagram ad."
+      description="A customer will earn tokens when doing an instagram ad."
       action="instagramAd"
       method="post"
       fields="retailer customer"
     >
 
-        <account-widget
+        <account-widget-retailer
           field="retailer"
           label="Retailer"
           placeholder="Retailer address"
-        ></account-widget>
+        ></account-widget-retailer>
 
         <account-widget
           field="customer"
@@ -263,11 +265,11 @@ export default class BallotPage extends LitElement {
       fields="nonprofit"
     >
 
-      <account-widget
+      <account-widget-nonprofit
           field="nonprofit"
           label="Nonprofit"
           placeholder="Non-Profit address"
-        ></account-widget>
+        ></account-widget-nonprofit>
 
     </action-card>
 
@@ -276,14 +278,14 @@ export default class BallotPage extends LitElement {
       description="A customer can stake a non-profit."
       action="stakeNonProfit"
       method="post"
-      fields="nonprofit customer nftToGive"
+      fields="nonprofit customer ftToGive retailerFrom"
     >
 
-        <account-widget
+        <account-widget-nonprofit
           field="nonprofit"
           label="Nonprofit"
           placeholder="Non-Profit address"
-        ></account-widget>
+        ></account-widget-nonprofit>
 
         <account-widget
           field="customer"
@@ -292,16 +294,22 @@ export default class BallotPage extends LitElement {
         ></account-widget>
 
         <text-widget
-          field="nftToGive"
-          label="What NFT will you give?"
+          field="ftToGive"
+          label="Amount of FTs to Give"
           placeholder="..."
         ></text-widget>
+
+        <account-widget-retailer
+          field="retailerFrom"
+          label="Retailer to take tokens from"
+          placeholder="Retailer address"
+        ></account-widget-retailer>
 
     </action-card>
 
     <action-card
-      title="Read Tokens"
-      description="Reads Tokens at an Account"
+      title="Read NFTs"
+      description="Reads NFTs at an Account"
       action="readTokens"
       method="get"
       fields="customer"
@@ -309,7 +317,23 @@ export default class BallotPage extends LitElement {
 
       <account-widget
           field="customer"
-          label="customer"
+          label="Customer"
+          placeholder="Customer address"
+        ></account-widget>
+
+    </action-card>
+
+    <action-card
+      title="Read Tokens"
+      description="Reads Fungible Tokens in an Account"
+      action="readMappedTokens"
+      method="get"
+      fields="customer"
+    >
+
+      <account-widget
+          field="customer"
+          label="Customer"
           placeholder="Customer address"
         ></account-widget>
 
@@ -323,27 +347,27 @@ export default class BallotPage extends LitElement {
       fields="retailer"
     >
 
-      <account-widget
+      <account-widget-retailer
           field="retailer"
           label="Retailer"
           placeholder="Retailer address"
-        ></account-widget>
+        ></account-widget-retailer>
 
     </action-card>
 
     <action-card
-      title="Read NonProfit NFTs"
-      description="Reads the NFTs that a NonProfit holds from hosting a campaign."
+      title="Read NonProfit Tokens"
+      description="Reads the Tokens that a NonProfit holds from hosting a campaign."
       action="readNonProfitTokens"
       method="get"
       fields="nonprofit"
     >
 
-      <account-widget
+      <account-widget-nonprofit
           field="nonprofit"
           label="Nonprofit"
           placeholder="Nonprofit address"
-        ></account-widget>
+        ></account-widget-nonprofit>
 
     </action-card>
 

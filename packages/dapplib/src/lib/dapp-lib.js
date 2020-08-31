@@ -76,7 +76,7 @@ module.exports = class DappLib {
     }
 
     // Done
-    static async earningPoints(data) {
+    static async earningTokens(data) {
         console.log(data.amountToEarn)
         let amountToEarnInt = parseInt(data.amountToEarn)
 
@@ -90,7 +90,7 @@ module.exports = class DappLib {
                 proposer: data.retailer
             }
         },
-            'earning_points',
+            'earning_tokens',
             {
                 customerAddrParam: { value: `0x${data.customer}`, type: t.Address },
                 amountToEarnParam: { value: amountToEarnInt, type: t.Int }
@@ -139,7 +139,7 @@ module.exports = class DappLib {
     }
 
     // Done
-    static async spendPoints(data) {
+    static async spendTokens(data) {
         let amountFromOtherRetailerInt = parseInt(data.amountFromOtherRetailer)
         console.log(data)
         let theOtherRetailerName = ""
@@ -163,7 +163,7 @@ module.exports = class DappLib {
                 proposer: data.customer
             }
         },
-            'spend_points',
+            'spend_tokens',
             {
                 retailerAddrParam: { value: `0x${data.retailer}`, type: t.Address },
                 rewardNameParam: { value: data.rewardItem, type: t.String },
@@ -209,9 +209,17 @@ module.exports = class DappLib {
 
     // Done
     static async trade(data) {
+        let config = DappLib.getConfig()
+        let fromWhatRetailer = ""
+        config.wallets.map((accountInfo, i) => {
+            if (accountInfo.address === data.fromWhatRetailer) {
+                fromWhatRetailer = accountInfo.name
+            }
+        })
+
         let ftToGiveInt = parseInt(data.ftToGive)
         let result = await Blockchain.post({
-            config: DappLib.getConfig(),
+            config: config,
             imports: {
                 FungibleToken: "01cf0e2f2f715450",
                 NonFungibleToken: "179b6b1cb6755e31",
@@ -226,7 +234,7 @@ module.exports = class DappLib {
                 secondAccount: { value: `0x${data.customer2}`, type: t.Address },
                 nftToGiveParam: { value: data.nftToGive, type: t.String },
                 ftToGiveParam: { value: ftToGiveInt, type: t.Int },
-                fromWhatRetailerParam: { value: data.fromWhatRetailer, type: t.String }
+                fromWhatRetailerParam: { value: fromWhatRetailer, type: t.String }
             }
         );
 
@@ -271,7 +279,7 @@ module.exports = class DappLib {
         let result = await Blockchain.post({
             config: DappLib.getConfig(),
             imports: {
-                NonFungibleToken: "179b6b1cb6755e31"
+                FungibleToken: "01cf0e2f2f715450"
             },
             roles: {
                 proposer: data.nonprofit
@@ -290,11 +298,21 @@ module.exports = class DappLib {
 
     // Done
     static async stakeNonProfit(data) {
+        console.log(data)
+        let config = DappLib.getConfig()
+        let retailerFrom = ""
+        config.wallets.map((accountInfo, i) => {
+            if (accountInfo.address === data.retailerFrom) {
+                retailerFrom = accountInfo.name
+            }
+        })
+        console.log(retailerFrom)
 
+        let ftToGiveInt = parseInt(data.ftToGive)
         let result = await Blockchain.post({
-            config: DappLib.getConfig(),
+            config: config,
             imports: {
-                NonFungibleToken: "179b6b1cb6755e31"
+                FungibleToken: "01cf0e2f2f715450"
             },
             roles: {
                 proposer: data.customer
@@ -303,7 +321,8 @@ module.exports = class DappLib {
             'stake_nonprofit',
             {
                 nonprofitAddrParam: { value: `0x${data.nonprofit}`, type: t.Address },
-                nftToGiveParam: { value: data.nftToGive, type: t.String }
+                ftToGiveParam: { value: ftToGiveInt, type: t.Int },
+                retailerFromParam: { value: retailerFrom, type: t.String }
             }
         );
 
@@ -328,6 +347,33 @@ module.exports = class DappLib {
             }
         },
             'read_tokens',
+            {
+                accountAddrParam: { value: `0x${data.customer}`, type: t.Address }
+            }
+
+        );
+
+        console.log('Tokens...', result);
+        return {
+            type: DappLib.DAPP_RESULT_ARRAY,
+            label: 'Tokens',
+            result: result.callData,
+            formatter: ['Text-20-5']
+        }
+    }
+
+    static async readMappedTokens(data) {
+
+        console.log('Reading tokens...', data)
+        let result = await Blockchain.get({
+            config: DappLib.getConfig(),
+            imports: {
+                FungibleToken: "01cf0e2f2f715450"
+            },
+            roles: {
+            }
+        },
+            'read_fungtokens',
             {
                 accountAddrParam: { value: `0x${data.customer}`, type: t.Address }
             }
@@ -376,14 +422,14 @@ module.exports = class DappLib {
         let result = await Blockchain.get({
             config: DappLib.getConfig(),
             imports: {
-                NonFungibleToken: "179b6b1cb6755e31"
+                FungibleToken: "01cf0e2f2f715450"
             },
             roles: {
             }
         },
-            'read_nonprofit_tokens',
+            'read_fungtokens',
             {
-                nonprofitAddrParam: { value: `0x${data.nonprofit}`, type: t.Address }
+                accountAddrParam: { value: `0x${data.nonprofit}`, type: t.Address }
             }
 
         );

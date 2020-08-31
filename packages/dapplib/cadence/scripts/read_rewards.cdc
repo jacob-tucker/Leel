@@ -16,6 +16,7 @@ pub fun main(retailerAddrParam: Address): [String] {
     // cost of that reward in Fungible Tokens
     log(retailerRewards.getRewards())
 
+    // Converts dictionary into array
     var rewardsList: [String] = []
     let rewardsListNames = retailerRewards.getRewards().keys
     let rewardsListCosts = retailerRewards.getRewards().values

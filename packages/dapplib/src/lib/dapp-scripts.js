@@ -7,27 +7,40 @@ const fcl = require("@onflow/fcl");
 
 module.exports = class DappScripts {
 
-	static read_nonprofit_tokens(imports) {
+	static read_fungtokens(imports) {
 		return fcl.script`
 				// read_nonprofit_tokens.cdc
 				
 				
-				// This script reads all the NFTs a non-profit holds to see the tokens that customers have donated there for their cause
+				// This script reads all the tokens that a non-profit holds to see the tokens that customers have donated there for their cause
 				
 				${DappScripts.injectImports(imports)}
-				pub fun main(nonprofitAddrParam: Address): [String] {
-				    let nonprofitAccount = getAccount(nonprofitAddrParam)
+				pub fun main(accountAddrParam: Address): [String] {
+				    let account = getAccount(accountAddrParam)
 				
-				    // Find the public Receiver capability for the user's collection
-				    let capability = nonprofitAccount.getCapability(/public/NFTReceiver)!
-				                        .borrow<&{NonFungibleToken.NFTReceiver}>()
-				                        ?? panic("Could not borrow nft collection reference from nonprofit")
+				    // Find the public Receiver capability for the nonprofits vault
+				    // Gets a reference to the Non-profit's vault so we can deposit into it
+				    let accountVault = account.getCapability(/public/MainReceiver)!
+				                            .borrow<&FungibleToken.Vault{FungibleToken.Receiver, FungibleToken.Balance, FungibleToken.Provider}>()
+				                            ?? panic("Could not borrow vault from the nonprofit")
 				
-				     // Print both collections as arrays of IDs
-				    log("Nonprofit 1 NFTs")
-				    log(capability.getItems())
+				    // Print out the tokens that the nonprofit has
+				    log("Nonprofit 1 Tokens")
+				    log(accountVault.mapTokensToRetailer)
 				
-				    return capability.getItems()
+				    // Converts dictionary into array
+				    var tokensList: [String] = []
+				    let tokensListNames = accountVault.mapTokensToRetailer.keys
+				    let tokensListCosts = accountVault.mapTokensToRetailer.values
+				
+				    var i = 0
+				    while i < tokensListNames.length {
+				        tokensList.append(tokensListNames[i].concat(" : ".concat(tokensListCosts[i].toString())))
+				        i = i + 1
+				    }
+				
+				    return tokensList
+				
 				}
 				
 				
@@ -54,6 +67,7 @@ module.exports = class DappScripts {
 				    // cost of that reward in Fungible Tokens
 				    log(retailerRewards.getRewards())
 				
+				    // Converts dictionary into array
 				    var rewardsList: [String] = []
 				    let rewardsListNames = retailerRewards.getRewards().keys
 				    let rewardsListCosts = retailerRewards.getRewards().values
@@ -75,15 +89,15 @@ module.exports = class DappScripts {
 				// read_tokens.cdc
 				
 				
-				// This script checks that the customer has points after 
-				// the retailer gives it to them after a purchase ("Earning Points" tx)
+				// This script checks that the customer has tokens after 
+				// the retailer gives it to them after a purchase ("Earning Tokens" tx)
 				// Also checks to see if the user has an NFT in their collection if they've reached a certain
 				// thresh-hold
 				
 				// STEPS TO GET THIS TO WORK:
 				// "Setup for Customer"
 				// "Setup for Retailer"
-				// "Earning Points"
+				// "Earning Tokens"
 				
 				${DappScripts.injectImports(imports)}
 				pub fun main(accountAddrParam: Address): [String] {

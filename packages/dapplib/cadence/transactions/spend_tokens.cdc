@@ -1,4 +1,4 @@
-// spend_points.cdc
+// spend_tokens.cdc
 import FungibleToken from 0x01
 import NonFungibleToken from 0x02
 import RewardsContract from 0x03
@@ -7,7 +7,7 @@ import RewardsContract from 0x03
 // rewards list. The amount of fungible tokens it costs is already given inside the retailer's 
 // rewards resource so we know how much to deduct/if the customer has enough in the first place
 
-// NOTE: Setup for Customer, Setup for Retailer, Earning Points and Create Reward must be run prior to this tx.
+// NOTE: Setup for Customer, Setup for Retailer, Earning Tokens and Create Reward must be run prior to this tx.
 // The User should also meet the required amount of tokens or this will not work, and it will be logged to the console.
 
 // SIGNED BY: CUSTOMER 
@@ -60,9 +60,9 @@ transaction(retailerAddrParam: Address, rewardNameParam: String, otherRetailerBo
         // Borrows the reward resource that corresponds to the NFT we are talking about
         let reward <- RetailerRewards.getReward(name: rewardNameParam)
         // Record the cost of the reward
-        self.CostOfItem = reward.points
-        // Record the cost of the reward if another retailer's points is involved
-        self.CostOfItemWithOtherRetailer = reward.points2nd
+        self.CostOfItem = reward.tokens 
+        // Record the cost of the reward if another retailer's tokens is involved
+        self.CostOfItemWithOtherRetailer = reward.tokens2nd
 
         // The allowed retailers if there are tokens being used by other retailers
         self.AllowedRetailers = reward.allowedRetailers
@@ -71,17 +71,17 @@ transaction(retailerAddrParam: Address, rewardNameParam: String, otherRetailerBo
         // The min UCV the customer must have to use tokens from other retailers
         self.MinCV = reward.minimumCVForOthers
         // Minimum amount of tokens the user must spend from this retailer if another
-        // retailer's points are involved
+        // retailer's tokens are involved
         self.MinTokensFromHere = reward.minTokensFromHere
         // Put the reward back in the dictionary by using the double <- move operator
         let oldReward <- RetailerRewards.rewards[rewardNameParam] <- reward
         // Destroy the temp reward 
         destroy oldReward
 
-        // This is saying the user will use another retailer's points in the tx
-        // If FALSE: the user will only use their points from this retailer (will
+        // This is saying the user will use another retailer's tokens in the tx
+        // If FALSE: the user will only use their tokens from this retailer (will
         self.OtherRetailerBool = otherRetailerBoolParam
-        // Specifies the retailer from which the user will use their points that they earned there
+        // Specifies the retailer from which the user will use their tokens that they earned there
         self.OtherRetailer = otherRetailerNameParam
         // The amount of tokens the user will use from this retailer (THIS ONLY APPLIES IF THE USER
         // IS USING A SEPERATE RETAILER'S TOKENS)
@@ -106,7 +106,7 @@ transaction(retailerAddrParam: Address, rewardNameParam: String, otherRetailerBo
                 if (self.TokensFromHere < self.MinTokensFromHere) {
                     panic("You are not using enough tokens from this retailer")
                 }
-                // The cost of the item in points is deducted from the user's account
+                // The cost of the item in tokens is deducted from the user's account
                 let removedTokensVault <- self.CustomerVaultToWithdraw.withdraw(amount: self.TokensFromHere, retailer: NFTMinterRef.name)
                 destroy removedTokensVault
 
@@ -116,7 +116,7 @@ transaction(retailerAddrParam: Address, rewardNameParam: String, otherRetailerBo
                 let removedTokensOtherVault <- self.CustomerVaultToWithdraw.withdraw(amount: self.CostOfItemWithOtherRetailer - self.TokensFromHere, retailer: self.OtherRetailer)
                 destroy removedTokensOtherVault
                 
-                log("Took points away")  
+                log("Took tokens away")  
 
                 // The retailer mints the new NFT and deposits it into the customer's collection
                 NFTMinterRef.mintNFT(recipient: self.CustomerCollection, item: rewardNameParam)
@@ -127,11 +127,11 @@ transaction(retailerAddrParam: Address, rewardNameParam: String, otherRetailerBo
             }
         } else {
             // This is if they are just using tokens from the retailer they are getting the NFT from
-            // The cost of the item in points is deducted from the user's account
+            // The cost of the item in tokens is deducted from the user's account
             let removedTokensVault <- self.CustomerVaultToWithdraw.withdraw(amount: self.CostOfItem, retailer: NFTMinterRef.name)
             destroy removedTokensVault
 
-            log("Took 30 points away")  
+            log("Took tokens away")  
 
             // The retailer mints the new NFT and deposits it into the customer's collection
             NFTMinterRef.mintNFT(recipient: self.CustomerCollection, item: rewardNameParam)

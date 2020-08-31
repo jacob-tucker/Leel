@@ -1,9 +1,9 @@
-// earning_points.cdc
+// earning_tokens.cdc
 
 import FungibleToken from 0x01
 import NonFungibleToken from 0x02
 
-// This tx is signed by the retailer and then deposits fungible tokens (points) into
+// This tx is signed by the retailer and then deposits fungible tokens (tokens) into
 // the customer's account. It also updated the user's UCV value for purchasing at the store.
 
 // NOTE: Setup for Customer and Setup for Retailer must be run prior to this transact
@@ -41,7 +41,7 @@ transaction(customerAddrParam: Address, amountToEarnParam: Int) {
         // account 10% of the UCV value.
         self.FTMinterRef.mintTokens(amount: UFix64(amountToEarnParam) + customerCollection.myReferenceNFT.UCV * UFix64(0.1), recipient: customerVault)
 
-        log("Retailer minted >= 10 points and gave them to the customer")
+        log("Retailer minted >= 10 tokens and gave them to the customer")
 
         customerCollection.myReferenceNFT.purchase(retailer: self.FTMinterRef.name)
 

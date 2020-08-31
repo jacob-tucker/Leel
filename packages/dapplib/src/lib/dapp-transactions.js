@@ -25,7 +25,7 @@ module.exports = class DappTransactions {
 				
 				    prepare(acct: AuthAccount) {
 				        // Borrows a reference to the retailer's rewards resource so they can create a new reward
-				        // with a name and number of points
+				        // with a name and number of tokens
 				        let RetailerRewards = acct.borrow<&RewardsContract.Rewards>(from: /storage/Rewards)
 				                                ?? panic("Could not borrow rewards resource")
 				
@@ -36,13 +36,13 @@ module.exports = class DappTransactions {
 				
 				        // Creates the new reward
 				        // Specifies the NFT they will receive (a water bottle)
-				        // The amount of points (from this retailer) the NFT will cost 
+				        // The amount of tokens (from this retailer) the NFT will cost 
 				        // THE NEXT FIELDS ONLY APPLY IF THE USER USES ANOTHER RETAILER'S TOKENS TO PURCHASE THE REWARD
 				        // ucvNumber, which is the minimum UCV the customer must have to use tokens from another retailer
 				        // otherRetailers, which is a list of retailers the user is allowed to spend their tokens from to help out with thr purchase
 				        // minTokensPercent, which is a percent of the amount of tokens the user must spend from THIS retailer in the tx
 				        // multiplier, which multiplies the base cost of the NFT by a number to get a new cost if incorporating another r
-				        RetailerRewards.createReward(name: rewardItemParam, points: UFix64(minimumTokensParam), ucvNumber: UFix64(5), cvNumber: UFix64(0), otherRetailers: allowedRetailersParam, minTokensPercent: UFix64(0.5), multiplier: UFix64(1.25))
+				        RetailerRewards.createReward(name: rewardItemParam, tokens: UFix64(minimumTokensParam), ucvNumber: UFix64(5), cvNumber: UFix64(0), otherRetailers: allowedRetailersParam, minTokensPercent: UFix64(0.5), multiplier: UFix64(1.25))
 				
 				        log("Created reward")
 				    }
@@ -54,12 +54,12 @@ module.exports = class DappTransactions {
 		`;
 	}
 
-	static earning_points(imports) {
+	static earning_tokens(imports) {
 		return fcl.transaction`
-				// earning_points.cdc
+				// earning_tokens.cdc
 				
 				
-				// This tx is signed by the retailer and then deposits fungible tokens (points) into
+				// This tx is signed by the retailer and then deposits fungible tokens (tokens) into
 				// the customer's account. It also updated the user's UCV value for purchasing at the store.
 				
 				// NOTE: Setup for Customer and Setup for Retailer must be run prior to this transact
@@ -98,7 +98,7 @@ module.exports = class DappTransactions {
 				        // account 10% of the UCV value.
 				        self.FTMinterRef.mintTokens(amount: UFix64(amountToEarnParam) + customerCollection.myReferenceNFT.UCV * UFix64(0.1), recipient: customerVault)
 				
-				        log("Retailer minted >= 10 points and gave them to the customer")
+				        log("Retailer minted >= 10 tokens and gave them to the customer")
 				
 				        customerCollection.myReferenceNFT.purchase(retailer: self.FTMinterRef.name)
 				
@@ -116,7 +116,7 @@ module.exports = class DappTransactions {
 				// SIGNED BY: RETAILER
 				
 				// This tx occurs when a user posts on instagram promoting the retailer. They will
-				// earn points and receive an updated UCV value for their good deeds (less than what they would
+				// earn tokens and receive an updated UCV value for their good deeds (less than what they would
 				// get for purchasing at the retailer, though).
 				
 				${DappTransactions.injectImports(imports)}
@@ -147,7 +147,7 @@ module.exports = class DappTransactions {
 				        // account 5% of the UCV value.
 				        self.FTMinterRef.mintTokens(amount: UFix64(10) + customerCollection.myReferenceNFT.UCV * UFix64(0.05), recipient: customerVault)
 				
-				        log("Retailer minted >= 10 points and gave them to the customer")
+				        log("Retailer minted >= 10 tokens and gave them to the customer")
 				
 				        customerCollection.myReferenceNFT.ad(retailer: self.FTMinterRef.name)
 				
@@ -198,7 +198,7 @@ module.exports = class DappTransactions {
 				
 				// This tx sets up a new user for the marketplace
 				// by publishing a Vault reference, so that retailers can deposit
-				// points into the user's account. It also creates an empty NFT Collection for the
+				// tokens into the user's account. It also creates an empty NFT Collection for the
 				// user so they can eventually receive NFTs from the retailer after certain thresh-holds.
 				
 				// SIGNED BY: CUSTOMER
@@ -212,7 +212,7 @@ module.exports = class DappTransactions {
 				    acct.save<@FungibleToken.Vault>(<-vaultA, to: /storage/MainVault)
 				  
 				    // Create a public Receiver capability to the Vault so retailers can
-				    // give them points for loyalty
+				    // give them tokens for loyalty
 				    acct.link<&FungibleToken.Vault{FungibleToken.Receiver, FungibleToken.Balance, FungibleToken.Provider}>
 				             (/public/MainReceiver, target: /storage/MainVault)
 				
@@ -245,13 +245,18 @@ module.exports = class DappTransactions {
 				${DappTransactions.injectImports(imports)}
 				transaction {
 				  prepare(acct: AuthAccount) {
-				    // store an empty NFT Collection in account storage so the non-profit can later receive NFTs
-				    acct.save<@NonFungibleToken.Collection>(<-NonFungibleToken.createEmptyCollection(), to: /storage/NFTCollection)
+				     // create a new vault instance for the customer with an initial balance of 0
+				    let vaultA <- FungibleToken.createEmptyVault()
 				
-				    // publish a capability to the Collection in storage so it can be deposited into
-				    acct.link<&{NonFungibleToken.NFTReceiver}>(/public/NFTReceiver, target: /storage/NFTCollection)
+				    // Store the vault in the account storage
+				    acct.save<@FungibleToken.Vault>(<-vaultA, to: /storage/MainVault)
+				  
+				    // Create a public Receiver capability to the Vault so retailers can
+				    // give them tokens for loyalty
+				    acct.link<&FungibleToken.Vault{FungibleToken.Receiver, FungibleToken.Balance, FungibleToken.Provider}>
+				             (/public/MainReceiver, target: /storage/MainVault)
 				
-				    log("Created a new NFT empty collection and published a reference")
+				    log("Created Vault reference on the nonprofit's account")
 				  }
 				}
 		`;
@@ -288,7 +293,7 @@ module.exports = class DappTransactions {
 				    // getAccount returns)
 				    acct.link<&FungibleToken.VaultMinter>(/private/PrivFTMinter, target: /storage/FTMinter)
 				
-				    log("Created a points minter for the retailer")
+				    log("Created a tokens minter for the retailer")
 				
 				    // store  anonfungible token minter resource in account storage
 				    acct.save(<-NonFungibleToken.createNFTMinter(name: retailerNameParam), to: /storage/NFTMinter)
@@ -314,15 +319,15 @@ module.exports = class DappTransactions {
 		`;
 	}
 
-	static spend_points(imports) {
+	static spend_tokens(imports) {
 		return fcl.transaction`
-				// spend_points.cdc
+				// spend_tokens.cdc
 				
 				// This tx allows the user to spend tokens on an item that is currently in the retailer's 
 				// rewards list. The amount of fungible tokens it costs is already given inside the retailer's 
 				// rewards resource so we know how much to deduct/if the customer has enough in the first place
 				
-				// NOTE: Setup for Customer, Setup for Retailer, Earning Points and Create Reward must be run prior to this tx.
+				// NOTE: Setup for Customer, Setup for Retailer, Earning Tokens and Create Reward must be run prior to this tx.
 				// The User should also meet the required amount of tokens or this will not work, and it will be logged to the console.
 				
 				// SIGNED BY: CUSTOMER 
@@ -376,9 +381,9 @@ module.exports = class DappTransactions {
 				        // Borrows the reward resource that corresponds to the NFT we are talking about
 				        let reward <- RetailerRewards.getReward(name: rewardNameParam)
 				        // Record the cost of the reward
-				        self.CostOfItem = reward.points
-				        // Record the cost of the reward if another retailer's points is involved
-				        self.CostOfItemWithOtherRetailer = reward.points2nd
+				        self.CostOfItem = reward.tokens 
+				        // Record the cost of the reward if another retailer's tokens is involved
+				        self.CostOfItemWithOtherRetailer = reward.tokens2nd
 				
 				        // The allowed retailers if there are tokens being used by other retailers
 				        self.AllowedRetailers = reward.allowedRetailers
@@ -387,17 +392,17 @@ module.exports = class DappTransactions {
 				        // The min UCV the customer must have to use tokens from other retailers
 				        self.MinCV = reward.minimumCVForOthers
 				        // Minimum amount of tokens the user must spend from this retailer if another
-				        // retailer's points are involved
+				        // retailer's tokens are involved
 				        self.MinTokensFromHere = reward.minTokensFromHere
 				        // Put the reward back in the dictionary by using the double <- move operator
 				        let oldReward <- RetailerRewards.rewards[rewardNameParam] <- reward
 				        // Destroy the temp reward 
 				        destroy oldReward
 				
-				        // This is saying the user will use another retailer's points in the tx
-				        // If FALSE: the user will only use their points from this retailer (will
+				        // This is saying the user will use another retailer's tokens in the tx
+				        // If FALSE: the user will only use their tokens from this retailer (will
 				        self.OtherRetailerBool = otherRetailerBoolParam
-				        // Specifies the retailer from which the user will use their points that they earned there
+				        // Specifies the retailer from which the user will use their tokens that they earned there
 				        self.OtherRetailer = otherRetailerNameParam
 				        // The amount of tokens the user will use from this retailer (THIS ONLY APPLIES IF THE USER
 				        // IS USING A SEPERATE RETAILER'S TOKENS)
@@ -422,7 +427,7 @@ module.exports = class DappTransactions {
 				                if (self.TokensFromHere < self.MinTokensFromHere) {
 				                    panic("You are not using enough tokens from this retailer")
 				                }
-				                // The cost of the item in points is deducted from the user's account
+				                // The cost of the item in tokens is deducted from the user's account
 				                let removedTokensVault <- self.CustomerVaultToWithdraw.withdraw(amount: self.TokensFromHere, retailer: NFTMinterRef.name)
 				                destroy removedTokensVault
 				
@@ -432,7 +437,7 @@ module.exports = class DappTransactions {
 				                let removedTokensOtherVault <- self.CustomerVaultToWithdraw.withdraw(amount: self.CostOfItemWithOtherRetailer - self.TokensFromHere, retailer: self.OtherRetailer)
 				                destroy removedTokensOtherVault
 				                
-				                log("Took points away")  
+				                log("Took tokens away")  
 				
 				                // The retailer mints the new NFT and deposits it into the customer's collection
 				                NFTMinterRef.mintNFT(recipient: self.CustomerCollection, item: rewardNameParam)
@@ -443,11 +448,11 @@ module.exports = class DappTransactions {
 				            }
 				        } else {
 				            // This is if they are just using tokens from the retailer they are getting the NFT from
-				            // The cost of the item in points is deducted from the user's account
+				            // The cost of the item in tokens is deducted from the user's account
 				            let removedTokensVault <- self.CustomerVaultToWithdraw.withdraw(amount: self.CostOfItem, retailer: NFTMinterRef.name)
 				            destroy removedTokensVault
 				
-				            log("Took 30 points away")  
+				            log("Took tokens away")  
 				
 				            // The retailer mints the new NFT and deposits it into the customer's collection
 				            NFTMinterRef.mintNFT(recipient: self.CustomerCollection, item: rewardNameParam)
@@ -467,37 +472,37 @@ module.exports = class DappTransactions {
 				
 				// SIGNED BY: CUSTOMER
 				
-				// This tx occurs when a user is giving one of their NFTs to a non-profit to stake their campaign
+				// This tx occurs when a user is giving their tokens to a non-profit to stake their campaign
 				
 				${DappTransactions.injectImports(imports)}
-				transaction(nonprofitAddrParam: Address, nftToGiveParam: String) {  
+				transaction(nonprofitAddrParam: Address, ftToGiveParam: Int, retailerFromParam: String) { 
 				
-				    let CustomerCollection: &NonFungibleToken.Collection
-				    let NFTName: String
+				    let customerVault: &FungibleToken.Vault
+				    let retailerName: String
 				
-				    prepare(acct: AuthAccount) {
-				        // Gets a reference to the customer's NFTCollection
-				        self.CustomerCollection = acct.borrow<&NonFungibleToken.Collection>(from: /storage/NFTCollection)
-				                                    ?? panic("Could not borrow the nonfungible token minter from the retailer")
-				        self.NFTName = nftToGiveParam
+				    prepare(acct: AuthAccount) {  
+				        // Borrows a reference by using a capability to the customer's fungible token vault
+				        self.customerVault = acct.borrow<&FungibleToken.Vault>(from: /storage/MainVault)
+				                                ?? panic("Could not borrow owner's vault reference")
+				        self.retailerName = retailerFromParam
 				    }
 				
 				    execute {
 				        // Gets the NonProfit account
 				        let nonprofitAccount = getAccount(nonprofitAddrParam)
 				
-				        // Gets a reference to the Non-profit's NFTCollection so we can deposit into it
-				        let NonProfitCollection = nonprofitAccount.getCapability(/public/NFTReceiver)!
-				                                    .borrow<&{NonFungibleToken.NFTReceiver}>()
-				                                    ?? panic("Could not borrow the nonfungible token minter from the retailer")
+				        // Gets a reference to the Non-profit's vault so we can deposit into it
+				        let nonprofitVault = nonprofitAccount.getCapability(/public/MainReceiver)!
+				                                    .borrow<&FungibleToken.Vault{FungibleToken.Receiver, FungibleToken.Balance, FungibleToken.Provider}>()
+				                                    ?? panic("Could not borrow vault from the nonprofit")
 				
-				        // Withdraws the NFT from the customer's NFTCollection
-				        let nft <- self.CustomerCollection.withdraw(withdrawItem: self.NFTName)
+				        // Withdraws the tokens from the customer's vault
+				        let vault <- self.customerVault.withdraw(amount: UFix64(ftToGiveParam), retailer: self.retailerName)
 				
-				        // Donates it to the non-profit's NFTCollection
-				        NonProfitCollection.deposit(token: <-nft)
+				        // Donates it to the non-profit's vault
+				        nonprofitVault.deposit(from: <-vault, retailer: self.retailerName)
 				
-				        log("Donated an NFT to the Non-Profit!")
+				        log("Donated tokens to the Non-Profit!")
 				
 				    }
 				

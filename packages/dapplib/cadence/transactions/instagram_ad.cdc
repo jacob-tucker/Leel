@@ -5,7 +5,7 @@ import NonFungibleToken from 0x02
 // SIGNED BY: RETAILER
 
 // This tx occurs when a user posts on instagram promoting the retailer. They will
-// earn points and receive an updated UCV value for their good deeds (less than what they would
+// earn tokens and receive an updated UCV value for their good deeds (less than what they would
 // get for purchasing at the retailer, though).
 
 transaction(customerAddrParam: Address) {
@@ -35,7 +35,7 @@ transaction(customerAddrParam: Address) {
         // account 5% of the UCV value.
         self.FTMinterRef.mintTokens(amount: UFix64(10) + customerCollection.myReferenceNFT.UCV * UFix64(0.05), recipient: customerVault)
 
-        log("Retailer minted >= 10 points and gave them to the customer")
+        log("Retailer minted >= 10 tokens and gave them to the customer")
 
         customerCollection.myReferenceNFT.ad(retailer: self.FTMinterRef.name)
 
