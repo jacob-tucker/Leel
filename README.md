@@ -13,7 +13,7 @@ To create an equitable system where consumers can capitalize on their unique cus
 Consumers have limited opportunity to leverage their unique customer value.
 They are passive participants, not owners of their data. 
 
-# Pre-requisites
+## Pre-requisites
 
 In order to develop and build "My Dapp," the following pre-requisites must be installed:
 
@@ -22,17 +22,17 @@ In order to develop and build "My Dapp," the following pre-requisites must be in
 * [Yarn](https://classic.yarnpkg.com/en/docs/install) (DappStarter uses [Yarn Workspaces](https://classic.yarnpkg.com/en/docs/workspaces))
 * [Flow CLI](https://docs.onflow.org/docs/cli) (https://docs.onflow.org/docs/cli) (after installation run `flow cadence install-vscode-extension` to enable code highlighting for Cadence source files)
 
-# Installation
+## Installation
 
 Using a terminal (or command prompt), change to the folder containing the project files and type: `yarn` This will fetch all required dependencies. The process will take 1-3 minutes and while it is in progress you can move on to the next step.
 
-# Build, Deploy and Test
+## Build, Deploy and Test
 
 Using a terminal (or command prompt), change to the folder containing the project files and type: `yarn start` This will run all the dev scripts in each project package.json.
 
 To view your dapp, open your browser to http://localhost:5000
 
-## [Playground](https://play.onflow.org/0d507a56-cf87-4232-a5dd-bcc585b64551)
+## The playground can be found here: [Playground](https://play.onflow.org/0d507a56-cf87-4232-a5dd-bcc585b64551)
 
 ### Notes
 
