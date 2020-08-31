@@ -16,7 +16,9 @@ They are passive participants, not owners of their data.
 ## Contracts, Transactions & Scripts
 
 The contracts can be found in packages/dapplib/contracts
+
 The transactions can be found in packages/dapplib/cadence/transactions
+
 The scripts can be found in packages/dapplib/cadence/scripts
 
 ## The playground can be found here: [Playground](https://play.onflow.org/0d507a56-cf87-4232-a5dd-bcc585b64551)
