@@ -9,8 +9,8 @@ To create an equitable system where consumers can capitalize on their unique cus
 
 ## Problem
 
-Consumers have limited opportunity to leverage their unique customer value.
-They are passive participants, not owners of their data. 
+Consumers have limited opportunity to leverage their unique customer value. Many times, a user's loyalty is often lost if there is no way to utilize it.
+Customers are passive participants, not owners of their data.
 
 ## Contracts, Transactions & Scripts
 
