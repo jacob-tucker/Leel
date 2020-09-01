@@ -93,7 +93,7 @@ This transaction allows customers to donate their NFTs to NonProfits to stake th
 
 We used DappStarter to help us get started, and it allowed us to have a nice UI to perform our smart contracts upon certain actions. The creators of DappStarter (the TryCrypto team) can be found here: https://www.trycrypto.com/
 
-In order to develop and build "My Dapp," the following pre-requisites must be installed:
+In order to develop and build the Leel Dapp the following pre-requisites must be installed:
 
 * [Visual Studio Code](https://code.visualstudio.com/download) (or any IDE for editing Javascript)
 * [NodeJS](https://nodejs.org/en/download/)
@@ -106,6 +106,6 @@ Using a terminal (or command prompt), change to the folder containing the projec
 
 ## Build, Deploy and Test
 
-Using a terminal (or command prompt), change to the folder containing the project files and type: `yarn start` This will run all the dev scripts in each project package.json.
+Using a terminal (or command prompt), change to the folder containing the project files and type: `yarn start` This will run all the dev scripts in each project package.json, and open up the application in your browser.
 
 To view your dapp, open your browser to http://localhost:5000
