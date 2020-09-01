@@ -5,6 +5,10 @@ Leel is a decentralized application developed on the [Flow](https://docs.onflow.
 
 This is the slides to our presentation: https://docs.google.com/presentation/d/1s0U78JeiGW3df4ACDIBAiWk9KzshEkZrxC9a5ytu-xQ/edit
 
+Promo video: https://drive.google.com/drive/folders/1LK0IIn8uqVZjEh4mdvQ3kya5gbe0x65U
+
+Technical video: https://drive.google.com/file/d/14ZaaWbiG3Rv5UgaMg_5EuEziMVojpNUg/view
+
 ## Purpose
 
 To create an equitable system where consumers can capitalize on their unique customer value to receive individualized rewards and foster opportunities for social good.
@@ -13,6 +17,10 @@ To create an equitable system where consumers can capitalize on their unique cus
 
 Consumers have limited opportunity to leverage their unique customer value. Many times, a user's loyalty is often lost if there is no way to utilize it.
 Customers are passive participants, not owners of their data.
+
+## Current limitations
+
+It is very complex and hard for retailers to be able to decide what UCV and CV values a customer would need to interact with other retailers if spending multiple types of tokens.
 
 ## Contracts, Transactions & Scripts
 
