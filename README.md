@@ -3,6 +3,8 @@
 Leel is a decentralized application developed on the [Flow](https://docs.onflow.org/docs/introduction) blockchain using a resource-oriented language, [Cadence](https://docs.onflow.org/docs/cadence).
 # Overview
 
+This is the slides to our presentation: https://docs.google.com/presentation/d/1s0U78JeiGW3df4ACDIBAiWk9KzshEkZrxC9a5ytu-xQ/edit
+
 ## Purpose
 
 To create an equitable system where consumers can capitalize on their unique customer value to receive individualized rewards and foster opportunities for social good.
