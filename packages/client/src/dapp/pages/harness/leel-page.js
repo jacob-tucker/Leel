@@ -102,7 +102,7 @@ export default class BallotPage extends LitElement {
       description="A retailer can create a reward."
       action="createReward"
       method="post"
-      fields="retailer rewardItem minimumTokens allowedRetailers"
+      fields="retailer rewardItem minimumTokens allowedRetailers minimumUCV minimumCV"
     >
 
       <account-widget-retailer
@@ -123,10 +123,24 @@ export default class BallotPage extends LitElement {
           placeholder="..."
       ></text-widget>
 
+      <h1>For Other Retailers:</h1>
+
       <text-widget
         field="allowedRetailers"
         label="Other Allowed Retailers"
         placeholder="..."
+      ></text-widget>
+
+      <text-widget
+          field="minimumUCV"
+          label="Minimum UCV"
+          placeholder="..."
+      ></text-widget>
+
+      <text-widget
+          field="minimumCV"
+          label="Minimum CV"
+          placeholder="..."
       ></text-widget>
 
     </action-card>
@@ -368,6 +382,28 @@ export default class BallotPage extends LitElement {
           label="Nonprofit"
           placeholder="Nonprofit address"
         ></account-widget-nonprofit>
+
+    </action-card>
+
+    <action-card
+      title="Read ReferenceNFT"
+      description="Reads the reference NFT of the user - will return UCV & CV from a specific retailer."
+      action="readReferenceNFT"
+      method="get"
+      fields="customer retailer"
+    >
+
+      <account-widget
+          field="customer"
+          label="Customer"
+          placeholder="Customer address"
+      ></account-widget>
+
+      <account-widget-retailer
+          field="retailer"
+          label="CV From Which Retailer?"
+          placeholder="Retailer address"
+      ></account-widget-retailer>
 
     </action-card>
 

@@ -26,9 +26,9 @@ export default class AccountWidget extends LitElement {
   }
 
   displayAccountOptions() {
-    let roles = ["NonProfit"];
+    let roles = ["CodePath", "Outside the Bowl"];
     let optionsString = '';
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < 2; i++) {
       let label = `User ${i}`;
       if (roles.length > i) {
         label = roles[i];

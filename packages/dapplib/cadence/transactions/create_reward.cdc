@@ -9,7 +9,7 @@ import RewardsContract from 0x03
 // SIGNED BY: RETAILER
 
 
-transaction(rewardItemParam: String, minimumTokensParam: Int, allowedRetailersParam: [String]) {
+transaction(rewardItemParam: String, minimumTokensParam: Int, allowedRetailersParam: [String], minimumUCVParam: Int, minimumCVParam: Int) {
 
 
     prepare(acct: AuthAccount) {
@@ -31,7 +31,7 @@ transaction(rewardItemParam: String, minimumTokensParam: Int, allowedRetailersPa
         // otherRetailers, which is a list of retailers the user is allowed to spend their tokens from to help out with thr purchase
         // minTokensPercent, which is a percent of the amount of tokens the user must spend from THIS retailer in the tx
         // multiplier, which multiplies the base cost of the NFT by a number to get a new cost if incorporating another r
-        RetailerRewards.createReward(name: rewardItemParam, tokens: UFix64(minimumTokensParam), ucvNumber: UFix64(5), cvNumber: UFix64(0), otherRetailers: allowedRetailersParam, minTokensPercent: UFix64(0.5), multiplier: UFix64(1.25))
+        RetailerRewards.createReward(name: rewardItemParam, tokens: UFix64(minimumTokensParam), ucvNumber: UFix64(minimumUCVParam), cvNumber: UFix64(minimumCVParam), otherRetailers: allowedRetailersParam, minTokensPercent: UFix64(0.5), multiplier: UFix64(1.25))
 
         log("Created reward")
     }

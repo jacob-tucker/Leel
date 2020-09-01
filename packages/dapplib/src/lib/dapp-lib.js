@@ -113,6 +113,8 @@ module.exports = class DappLib {
         let allowedRetailersArray = data.allowedRetailers.split(', ')
         console.log(allowedRetailersArray)
         let minimumTokensInt = parseInt(data.minimumTokens)
+        let minimumUCVInt = parseInt(data.minimumUCV)
+        let minimumCVInt = parseInt(data.minimumCV)
         let result = await Blockchain.post({
             config: DappLib.getConfig(),
             imports: {
@@ -126,7 +128,9 @@ module.exports = class DappLib {
             {
                 rewardItemParam: { value: data.rewardItem, type: t.String },
                 minimumTokensParam: { value: minimumTokensInt, type: t.Int },
-                allowedRetailersParam: { value: allowedRetailersArray, type: t.Array(t.String) }
+                allowedRetailersParam: { value: allowedRetailersArray, type: t.Array(t.String) },
+                minimumUCVParam: { value: minimumUCVInt, type: t.Int },
+                minimumCVParam: { value: minimumCVInt, type: t.Int }
             }
         );
 
@@ -430,6 +434,41 @@ module.exports = class DappLib {
             'read_fungtokens',
             {
                 accountAddrParam: { value: `0x${data.nonprofit}`, type: t.Address }
+            }
+
+        );
+
+        console.log('Tokens...', result);
+        return {
+            type: DappLib.DAPP_RESULT_ARRAY,
+            label: 'Tokens',
+            result: result.callData,
+            formatter: ['Text-20-5']
+        }
+    }
+
+    static async readReferenceNFT(data) {
+        let config = DappLib.getConfig()
+        let retailerName = ""
+        config.wallets.map((accountInfo, i) => {
+            if (accountInfo.address === data.retailer) {
+                retailerName = accountInfo.name
+            }
+        })
+
+        console.log('Reading tokens...', data)
+        let result = await Blockchain.get({
+            config: DappLib.getConfig(),
+            imports: {
+                NonFungibleToken: "179b6b1cb6755e31"
+            },
+            roles: {
+            }
+        },
+            'read_referenceNFT',
+            {
+                customerAddrParam: { value: `0x${data.customer}`, type: t.Address },
+                retailerNameParam: { value: retailerName, type: t.String }
             }
 
         );
