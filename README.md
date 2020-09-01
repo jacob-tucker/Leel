@@ -1,8 +1,7 @@
-# Overview
-
-[![dummy photo](https://media.discordapp.net/attachments/749647287667523604/750071226969358356/leel_logo_together.png)](https://play.onflow.org/0d507a56-cf87-4232-a5dd-bcc585b64551)
+[![dummy photo](https://github.com/jacob-tucker/Leel/blob/master/packages/client/src/dapp/pages/leel_logo_together_new.png)](https://play.onflow.org/0d507a56-cf87-4232-a5dd-bcc585b64551)
 
 Leel is a decentralized application developed on the [Flow](https://docs.onflow.org/docs/introduction) blockchain using a resource-oriented language, [Cadence](https://docs.onflow.org/docs/cadence).
+# Overview
 
 ## Purpose
 
@@ -10,8 +9,8 @@ To create an equitable system where consumers can capitalize on their unique cus
 
 ## Problem
 
-Consumers have limited opportunity to leverage their unique customer value.
-They are passive participants, not owners of their data. 
+Consumers have limited opportunity to leverage their unique customer value. Many times, a user's loyalty is often lost if there is no way to utilize it.
+Customers are passive participants, not owners of their data.
 
 ## Contracts, Transactions & Scripts
 
@@ -21,7 +20,7 @@ The transactions can be found in packages/dapplib/cadence/transactions
 
 The scripts can be found in packages/dapplib/cadence/scripts
 
-## The playground can be found [here](https://play.onflow.org/0d507a56-cf87-4232-a5dd-bcc585b64551)
+## The playground can be found [here](https://play.onflow.org/0d507a56-cf87-4232-a5dd-bcc585b64551).
 
 ### Notes
 
@@ -90,11 +89,16 @@ This transaction allows NonProfits to set up an account. This brings in the comm
 
 This transaction allows customers to donate their NFTs to NonProfits to stake their campaigns and help with their projects/desires. The NFT will be removed from the customer's account and placed into the NonProfit's NFT Collection.
 
+## Future Additions
+- Find a way to tie a customer's donations to NonProfits to a ICV (individual community value). This will then have an impact on the customer's UCV and thus their treatment at certain retailers based on how important they view the ICV to be.
+- Come up with a way to figure out a customer's loyalty behavior through their purchasing preferences and behavior, for example figuring out a user loves to buy from grocery stores, so we'll give them greater rewards at grocery stores. Or, if a user always brings their family to a sporting store, but buys for him/herself at a food market, how can we encourage the customer to potentially bring his family to the food market.
+- Provide a way for retailers to interact with NonProfits directly, which would introduce a way for retailers to donate their tokens to NonProfits.
+
 ## Pre-requisites
 
 We used DappStarter to help us get started, and it allowed us to have a nice UI to perform our smart contracts upon certain actions. The creators of DappStarter (the TryCrypto team) can be found here: https://www.trycrypto.com/
 
-In order to develop and build "My Dapp," the following pre-requisites must be installed:
+In order to develop and build the Leel Dapp the following pre-requisites must be installed:
 
 * [Visual Studio Code](https://code.visualstudio.com/download) (or any IDE for editing Javascript)
 * [NodeJS](https://nodejs.org/en/download/)
@@ -107,6 +111,6 @@ Using a terminal (or command prompt), change to the folder containing the projec
 
 ## Build, Deploy and Test
 
-Using a terminal (or command prompt), change to the folder containing the project files and type: `yarn start` This will run all the dev scripts in each project package.json.
+Using a terminal (or command prompt), change to the folder containing the project files and type: `yarn start` This will run all the dev scripts in each project package.json, and open up the application in your browser.
 
 To view your dapp, open your browser to http://localhost:5000
