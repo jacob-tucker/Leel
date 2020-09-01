@@ -89,6 +89,11 @@ This transaction allows NonProfits to set up an account. This brings in the comm
 
 This transaction allows customers to donate their NFTs to NonProfits to stake their campaigns and help with their projects/desires. The NFT will be removed from the customer's account and placed into the NonProfit's NFT Collection.
 
+## Future Additions
+-
+-
+-
+
 ## Pre-requisites
 
 We used DappStarter to help us get started, and it allowed us to have a nice UI to perform our smart contracts upon certain actions. The creators of DappStarter (the TryCrypto team) can be found here: https://www.trycrypto.com/
