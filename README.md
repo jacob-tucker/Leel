@@ -90,9 +90,9 @@ This transaction allows NonProfits to set up an account. This brings in the comm
 This transaction allows customers to donate their NFTs to NonProfits to stake their campaigns and help with their projects/desires. The NFT will be removed from the customer's account and placed into the NonProfit's NFT Collection.
 
 ## Future Additions
--
--
--
+- Find a way to tie a customer's donations to NonProfits to a ICV (individual community value). This will then have an impact on the customer's UCV and thus their treatment at certain retailers based on how important they view the ICV to be.
+- Come up with a way to figure out a customer's loyalty behavior through their purchasing preferences and behavior, for example figuring out a user loves to buy from grocery stores, so we'll give them greater rewards at grocery stores. Or, if a user always brings their family to a sporting store, but buys for him/herself at a food market, how can we encourage the customer to potentially bring his family to the food market.
+- Provide a way for retailers to interact with NonProfits directly, which would introduce a way for retailers to donate their tokens to NonProfits.
 
 ## Pre-requisites
 
