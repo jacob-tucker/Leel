@@ -35,9 +35,8 @@ export default class DappPage extends LitElement {
     let content = html`
       <div class="container m-auto">
         <div class="row fadeIn mt-3 p-2 block">
-          <h2 class="text-6xl">Leel</h2>
+          <img .src=${Logo} alt="Logo" />
           <p class="mt-3">
-            <img src={Logo} alt="Logo" />
             This is a preview of how Leel would function in a real-world scenario.
           </p>
           <p class="mt-3">
