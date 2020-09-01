@@ -1,6 +1,6 @@
 # Overview
 
-[![dummy photo](https://media.discordapp.net/attachments/749647287667523604/750071226969358356/leel_logo_together.png)](https://play.onflow.org/0d507a56-cf87-4232-a5dd-bcc585b64551)
+[![dummy photo](https://github.com/jacob-tucker/Leel/blob/master/packages/client/src/dapp/pages/leel_logo_together_new.png)](https://play.onflow.org/0d507a56-cf87-4232-a5dd-bcc585b64551)
 
 Leel is a decentralized application developed on the [Flow](https://docs.onflow.org/docs/introduction) blockchain using a resource-oriented language, [Cadence](https://docs.onflow.org/docs/cadence).
 
