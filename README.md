@@ -5,7 +5,7 @@ Leel is a decentralized application developed on the [Flow](https://docs.onflow.
 
 This is the slides to our presentation: https://docs.google.com/presentation/d/1s0U78JeiGW3df4ACDIBAiWk9KzshEkZrxC9a5ytu-xQ/edit
 
-Promo video: https://drive.google.com/file/d/1Ar5uVSH_hXPOOZi6c569JuP4pdzcZtkZ/view?usp=sharing
+Promo video: https://youtu.be/lJYlFbUjIus
 
 Technical video: https://youtu.be/_IzQNsV2xVs
 
