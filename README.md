@@ -3,6 +3,12 @@
 Leel is a decentralized application developed on the [Flow](https://docs.onflow.org/docs/introduction) blockchain using a resource-oriented language, [Cadence](https://docs.onflow.org/docs/cadence).
 # Overview
 
+This is the slides to our presentation: https://docs.google.com/presentation/d/1s0U78JeiGW3df4ACDIBAiWk9KzshEkZrxC9a5ytu-xQ/edit
+
+Promo video: https://youtu.be/lJYlFbUjIus
+
+Technical video: https://youtu.be/_IzQNsV2xVs
+
 ## Purpose
 
 To create an equitable system where consumers can capitalize on their unique customer value to receive individualized rewards and foster opportunities for social good.
@@ -11,6 +17,11 @@ To create an equitable system where consumers can capitalize on their unique cus
 
 Consumers have limited opportunity to leverage their unique customer value. Many times, a user's loyalty is often lost if there is no way to utilize it.
 Customers are passive participants, not owners of their data.
+
+## Current limitations
+
+- It is very complex and hard for retailers to be able to decide what UCV and CV values a customer would need to interact with other retailers if spending multiple types of tokens. Also, as of now, we do not have any connections between Retailers and NonProfits, because if a retailer was to donate to nonprofits and the nonprofits were to donate to a customer, the retailers tokens could be spent somewhere without doing anything, and we'd have to add restrictions to this.
+- The naming of NFTs is pretty hard coded since dictionaries can only store 1 type of name.
 
 ## Contracts, Transactions & Scripts
 
