@@ -32,11 +32,25 @@ export default class HarnessPage extends LitElement {
   getPages() {
     return [
       {
-        "name": "leel",
-        "title": "Leel",
-        "description": "View how the smart contracts behind Leel interact with a UI.",
+        "name": "customer",
+        "title": "customer",
+        "description": "Access the customer interface.",
         "category": " ",
-        "route": "/leel"
+        "route": "/customer"
+      },
+      {
+        "name": "retailer",
+        "title": "retailer",
+        "description": "Access the retailer interface.",
+        "category": " ",
+        "route": "/retailer"
+      },
+      {
+        "name": "nonprofit",
+        "title": "nonprofit",
+        "description": "Access the nonprofit interface.",
+        "category": " ",
+        "route": "/nonprofit"
       }
     ];
   }

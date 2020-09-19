@@ -10,7 +10,7 @@ import "../../../lib/components/widgets/upload-widget.js";
 import DappLib from "@trycrypto/dappstarter-dapplib";
 import { LitElement, html, customElement, property } from "lit-element";
 
-@customElement('leel-page')
+@customElement('customer-page')
 export default class BallotPage extends LitElement {
   @property()
   title;
@@ -50,98 +50,6 @@ export default class BallotPage extends LitElement {
         ></account-widget>
 
       
-
-    </action-card>
-
-    <action-card
-      title="Setup For Retailer"
-      description="Sets up a retailer."
-      action="setupForRetailer"
-      method="post"
-      fields="retailer"
-    >
-
-      <account-widget-retailer
-          field="retailer"
-          label="Retailer"
-          placeholder="Retailer address"
-        ></account-widget-retailer>
-
-    </action-card>
-
-    <action-card
-      title="Earning Tokens"
-      description="A customer will earn tokens when buying from the retailer."
-      action="earningTokens"
-      method="post"
-      fields="retailer customer amountToEarn"
-    >
-
-        <account-widget-retailer
-          field="retailer"
-          label="Retailer"
-          placeholder="Retailer address"
-        ></account-widget-retailer>
-
-        <account-widget
-          field="customer"
-          label="Customer"
-          placeholder="Customer address"
-        ></account-widget>
-
-        <text-widget
-          field="amountToEarn"
-          label="Amount To Earn"
-          placeholder="..."
-        ></text-widget>
-
-    </action-card>
-
-    <action-card
-      title="Create Reward"
-      description="A retailer can create a reward."
-      action="createReward"
-      method="post"
-      fields="retailer rewardItem minimumTokens allowedRetailers minimumUCV minimumCV"
-    >
-
-      <account-widget-retailer
-          field="retailer"
-          label="Retailer"
-          placeholder="Retailer address"
-        ></account-widget-retailer>
-
-      <text-widget
-        field="rewardItem"
-        label="Reward Item"
-        placeholder="..."
-      ></text-widget>
-
-      <text-widget
-          field="minimumTokens"
-          label="Minimum Required Tokens"
-          placeholder="..."
-      ></text-widget>
-
-      <h1>For Other Retailers:</h1>
-
-      <text-widget
-        field="allowedRetailers"
-        label="Other Allowed Retailers"
-        placeholder="..."
-      ></text-widget>
-
-      <text-widget
-          field="minimumUCV"
-          label="Minimum UCV"
-          placeholder="..."
-      ></text-widget>
-
-      <text-widget
-          field="minimumCV"
-          label="Minimum CV"
-          placeholder="..."
-      ></text-widget>
 
     </action-card>
 
@@ -189,28 +97,6 @@ export default class BallotPage extends LitElement {
     </action-card>
 
     <action-card
-      title="Remove Reward"
-      description="A retailer can remove a reward."
-      action="removeReward"
-      method="post"
-      fields="retailer rewardItem"
-    >
-
-      <account-widget-retailer
-          field="retailer"
-          label="Retailer"
-          placeholder="Retailer address"
-        ></account-widget-retailer>
-
-      <text-widget
-        field="rewardItem"
-        label="Reward Item"
-        placeholder="..."
-      ></text-widget>
-
-    </action-card>
-
-    <action-card
       title="Trade"
       description="Trade an NFT for FTs from another customer."
       action="trade"
@@ -247,44 +133,6 @@ export default class BallotPage extends LitElement {
           label="From What Retailer"
           placeholder="..."
         ></account-widget-retailer>
-    </action-card>
-
-    <action-card
-      title="Instagram Ad"
-      description="A customer will earn tokens when doing an instagram ad."
-      action="instagramAd"
-      method="post"
-      fields="retailer customer"
-    >
-
-        <account-widget-retailer
-          field="retailer"
-          label="Retailer"
-          placeholder="Retailer address"
-        ></account-widget-retailer>
-
-        <account-widget
-          field="customer"
-          label="Customer"
-          placeholder="Customer address"
-        ></account-widget>
-
-    </action-card>
-
-    <action-card
-      title="Setup For Non-Profit"
-      description="Sets up a non-profit."
-      action="setupForNonProfit"
-      method="post"
-      fields="nonprofit"
-    >
-
-      <account-widget-nonprofit
-          field="nonprofit"
-          label="Nonprofit"
-          placeholder="Non-Profit address"
-        ></account-widget-nonprofit>
-
     </action-card>
 
     <action-card
